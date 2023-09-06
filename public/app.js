@@ -65,4 +65,20 @@ socket.on('update circles', (data) => {
     circles = data;
 });
 
+let pingTimestamp;
+
+// Emit ping event to the server
+function sendPing() {
+    pingTimestamp = Date.now();
+    socket.emit('ping', pingTimestamp);
+}
+
+// Listen for pong event from the server
+socket.on('pong', (timestamp) => {
+    const latency = Date.now() - timestamp;
+    document.getElementById('pingDisplay').textContent = `Ping: ${latency}ms`;
+});
+
+setInterval(sendPing, 1000);
+
 update();

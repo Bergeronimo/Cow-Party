@@ -32,6 +32,10 @@ io.on('connection', (socket) => {
         delete circles[socket.id]; // Remove circle data for the disconnected client
         io.emit('update circles', circles); // Broadcast updated data
     });
+
+    socket.on('ping', (timestamp) => {
+        socket.emit('pong', timestamp);
+    });
 });
 
 server.listen(3000, '0.0.0.0', () => {
