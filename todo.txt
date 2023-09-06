@@ -1,0 +1,13 @@
+- local bounds checking
+- serverside bounds checking
+- bot players
+
+- change speed of players
+- players eat eachother
+- some more ui
+
+- winning at end of timer
+
+- midjourney gwaphics
+- 9 cow variations, baby, medium, bloated
+- 4 grass variations
