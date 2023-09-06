@@ -15,12 +15,19 @@ const keysPressed = {
     ArrowRight: false
 };
 
-function drawCircle(circleData) {
+function drawCircle(circleData, id) {
     ctx.beginPath();
     ctx.arc(circleData.x, circleData.y, circleData.radius, 0, Math.PI * 2);
     ctx.fillStyle = 'blue';
     ctx.fill();
     ctx.closePath();
+
+    // Adjust font, position, and color for the ID text
+    ctx.font = (id === socket.id) ? 'bold 12px Arial' : '12px Arial';
+    ctx.fillStyle = 'black';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(id, circleData.x - circleData.radius, circleData.y - circleData.radius);
 }
 
 function update() {
@@ -33,7 +40,7 @@ function update() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let id in circles) {
-        drawCircle(circles[id]);
+        drawCircle(circles[id], id);
     }
 
     socket.emit('move circle', myCircle);
