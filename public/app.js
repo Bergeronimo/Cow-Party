@@ -47,7 +47,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('http://98.197.238.51:3000');
 
 document.addEventListener('keydown', (event) => {
     if (keysPressed.hasOwnProperty(event.key)) {
