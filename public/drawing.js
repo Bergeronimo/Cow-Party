@@ -1,5 +1,6 @@
 import { state } from './state.js';
 import { GrassTexture, grassTextures } from './assets.js';
+import { CowTexture, cowTextures } from './assets.js';
 import { socket } from './connection.js';
 import { Constants } from './constants.js';
 
@@ -12,20 +13,28 @@ ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 
-function drawCircle(circleData, id) {
-    ctx.beginPath();
-    ctx.arc(circleData.x, circleData.y, circleData.radius, 0, Math.PI * 2);
-    ctx.fillStyle = 'blue';
-    ctx.fill();
-    ctx.closePath();
+const cowTextureIndex = Math.floor(Math.random() * 3);
+
+function drawCow(player, id) {
+    // ctx.beginPath();
+    // ctx.arc(circleData.x, circleData.y, circleData.radius, 0, Math.PI * 2);
+    // ctx.fillStyle = 'blue';
+    // ctx.fill();
+    // ctx.closePath();
+
+    const texture = cowTextures[cowTextureIndex];
+    let start_x = player.x - player.radius;
+    let start_y = player.y - player.radius;
+    ctx.drawImage(texture,
+        start_x, start_y, player.radius * 2, player.radius * 2);
 
     // Draw a red bounding box around the circle
     ctx.beginPath();
     ctx.rect(
-        circleData.x - circleData.radius, // X coordinate of the top-left corner
-        circleData.y - circleData.radius, // Y coordinate of the top-left corner
-        circleData.radius * 2,           // Width of the rectangle
-        circleData.radius * 2            // Height of the rectangle
+        player.x - player.radius, // X coordinate of the top-left corner
+        player.y - player.radius, // Y coordinate of the top-left corner
+        player.radius * 2,           // Width of the rectangle
+        player.radius * 2            // Height of the rectangle
     );
     ctx.strokeStyle = 'red';
     ctx.lineWidth = 2; // Adjust the line width as needed
@@ -37,7 +46,7 @@ function drawCircle(circleData, id) {
     ctx.fillStyle = 'black';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText(id, circleData.x - circleData.radius, circleData.y - circleData.radius);
+    ctx.fillText(id, player.x - player.radius, player.y - player.radius);
 }
 
 function drawFoodDot(foodDot, id) {
@@ -79,7 +88,7 @@ const draw = () => {
     for (let id in state.circles) {
         let circle = state.circles[id];
         if (circle) {
-            drawCircle(circle, id);
+            drawCow(circle, id);
         }
     }
     // draw food dots
@@ -88,4 +97,4 @@ const draw = () => {
     }
 }
 
-export { canvas, ctx, drawCircle, drawFoodDot, draw };
+export { canvas, ctx, drawCow, drawFoodDot, draw };

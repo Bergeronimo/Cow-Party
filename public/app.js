@@ -31,7 +31,7 @@ function step() {
                 );
 
                 if (distance < (circle.radius + Constants.foodDotRadius)) {
-                    circle.radius += 1;
+                    circle.radius += 2;
                     state.eatenFoodIDs.push(foodID);
                     delete state.foodDots[foodID];
                 }
