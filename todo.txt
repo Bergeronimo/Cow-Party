@@ -1,22 +1,27 @@
 ----------------------------
 TODID
 ----------------------------
-+ refactor
+refactor
+local bounds checking
+midjourney gwaphics
+3 cow variations
+4 grass variations
+
+----------------------------
+TONOTDO
+----------------------------
+serverside bounds checking
+players eat eachother
 
 ----------------------------
 TODO
 ----------------------------
-- local bounds checking
-- serverside bounds checking
-- bot players
+change speed of players (become slower as you get fat)
+phonecontrols
+gamepad
 
-- change speed of players
-- players eat eachother
-- some more ui
 
-- winning at end of timer
-
-- midjourney gwaphics
-- 9 cow variations, baby, medium, bloated
-- 4 grass variations
-
+bot players
+some more ui
+winning at end of timer
+(cow graphics depend on size for funny)

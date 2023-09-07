@@ -11,6 +11,10 @@ const CowTexture = new_enum(
     "COW_2",
     "COW_3",
 );
+
+// const moo 1 / 2 / 3, each has high, med, low
+
+
 const BackgroundTexture = new_enum(
     "BACKGROUND_1",
 );
@@ -18,6 +22,7 @@ const BackgroundTexture = new_enum(
 let grassTextures = {};
 let cowTextures = {};
 let backgroundTextures = {};
+let mooSounds = {};
 
 function loadGrassTextures() {
     return new Promise((resolve) => {
@@ -109,6 +114,34 @@ function loadBackgroundTextures() {
     });
 }
 
+function loadMoos() {
+    return new Promise((resolve) => {
+        // load moo sounds
+        const enum_filename_pairs = [
+            ["MOO_1", "moo1.ogg"],
+            ["MOO_2", "moo2.ogg"],
+            ["MOO_3", "moo3.ogg"],
+        ];
+
+        const moo_start_path = "./assets/";
+        for (const [key, filename] of enum_filename_pairs) {
+            console.log(`setting asset source for ${filename}`);
+            mooSounds[key] = new Audio(moo_start_path + filename);
+        }
+
+        let soundsLoaded = 0;
+        for (const key in mooSounds) {
+            console.log(`adding load listener for ${key}`);
+            mooSounds[key].addEventListener('canplaythrough', function () {
+                soundsLoaded++;
+                if (soundsLoaded === Object.keys(mooSounds).length) {
+                    console.log("moo sounds loaded");
+                    resolve();
+                }
+            });
+        }
+    });
+}
 
 function load_images() {
     return new Promise((resolve) => {
@@ -123,7 +156,22 @@ function load_images() {
     });
 }
 
+function load_sounds() {
+    return new Promise((resolve, reject) => {
+        Promise.all([
+            loadMoos(),
+            //loadJoinSound(),
+        ]).then(() => {
+            console.log("all sounds loaded");
+            resolve();
+        }).catch(error => {
+            console.error("Error loading sounds:", error);
+            reject(error);
+        });
+    });
+}
+
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
 export { BackgroundTexture, backgroundTextures };
-export { load_images };
+export { load_images, load_sounds, mooSounds };

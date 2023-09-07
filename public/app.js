@@ -6,7 +6,7 @@ import { initClientChannels } from './client_channels.js';
 import { state } from './state.js';
 import { Constants } from './constants.js';
 import { draw } from './drawing.js';
-import { load_images } from './assets.js';
+import { load_images, load_sounds, mooSounds } from './assets.js';
 import { socket } from './connection.js';
 import { getCowTextureIndexFromPlayerSocketId } from './drawing.js';
 
@@ -55,6 +55,8 @@ function step() {
                     circle.radius += 2;
                     state.eatenFoodIDs.push(foodID);
                     delete state.foodDots[foodID];
+                    const randomMooKey = `MOO_${Math.floor(Math.random() * 3) + 1}`;
+                    mooSounds[randomMooKey].play();
                 }
             }
         }
@@ -66,6 +68,7 @@ async function init() {
     initServerChannels(socket);
     initClientChannels(socket);
     await load_images();
+    await load_sounds();
 
     await new Promise(resolve => setTimeout(resolve, 1000));
     const myCowTextureIdP = document.getElementById('myCowTextureId');
