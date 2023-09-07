@@ -1,3 +1,11 @@
+----------------------------
+TODID
+----------------------------
++ refactor
+
+----------------------------
+TODO
+----------------------------
 - local bounds checking
 - serverside bounds checking
 - bot players
@@ -11,3 +19,4 @@
 - midjourney gwaphics
 - 9 cow variations, baby, medium, bloated
 - 4 grass variations
+

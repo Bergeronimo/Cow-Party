@@ -38,11 +38,6 @@ function trySpawnRandomFoodDot() {
     return foodDotKV;
 }
 
-// for (let i = 0; i < maxFoodDots; i++) {
-//     trySpawnRandomFoodDot()
-// }
-
-
 io.on('connection', (socket) => {
     console.log('a user connected:', socket.id);
 

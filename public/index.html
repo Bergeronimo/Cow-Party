@@ -10,8 +10,20 @@
 
 <body>
     <canvas id="main-canvas" width="500" height="500" style="border:1px solid #000;"></canvas>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="/socket.io/socket.io.js"></script>
+
+    <script type="module" src="constants.js"></script>
+    <script type="module" src="state.js"></script>
+
+    <script type="module" src="utils.js"></script>
+    <script type="module" src="assets.js"></script>
+    <script type="module" src="drawing.js"></script>
+    <script type="module" src="controls.js"></script>
+    <script type="module" src="latency_check.js"></script>
+    <script type="module" src="server_channels.js"></script>
+    <script type="module" src="client_channels.js"></script>
+    <script type="module" src="app.js"></script>
+
 
 
     <p id="pingDisplay">Ping: -- ms</p>
