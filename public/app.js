@@ -8,6 +8,7 @@ import { Constants } from './constants.js';
 import { draw } from './drawing.js';
 import { load_images } from './assets.js';
 import { socket } from './connection.js';
+import { getCowTextureIndexFromPlayerSocketId } from './drawing.js';
 
 function step() {
     // step all circles
@@ -17,6 +18,26 @@ function step() {
             circle.y += circle.vy;
         }
     });
+
+    // bounds check all circles
+    Object.values(state.circles).forEach(circle => {
+        if (circle) {
+            // left side
+            if (circle.x < circle.radius) {
+                circle.x = circle.radius;
+            } else if (circle.x > (Constants.worldWidth - circle.radius)) {
+                circle.x = Constants.worldWidth - circle.radius;
+            }
+
+            // top side
+            if (circle.y < circle.radius) {
+                circle.y = circle.radius;
+            } else if (circle.y > (Constants.worldHeight - circle.radius)) {
+                circle.y = Constants.worldHeight - circle.radius;
+            }
+        }
+    });
+
 
     // check if any foods are eaten
     const circle = state.circles[socket.id];
@@ -45,6 +66,12 @@ async function init() {
     initServerChannels(socket);
     initClientChannels(socket);
     await load_images();
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    const myCowTextureIdP = document.getElementById('myCowTextureId');
+    const myCowTextureIndex = getCowTextureIndexFromPlayerSocketId(socket.id);
+    myCowTextureIdP.innerHTML = `My cow texture index: ${myCowTextureIndex}`
+
 }
 
 function loop() {

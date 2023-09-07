@@ -47,7 +47,7 @@ io.on('connection', (socket) => {
         y: Math.random() * 500,
         vx: 0,
         vy: 0,
-        radius: 4
+        radius: 4,
     };
 
     // Send the updated circles data to all clients
@@ -84,9 +84,11 @@ io.on('connection', (socket) => {
 
     // transmit all consumed food dots 
     setInterval(() => {
-        io.emit('server consumed food dot ids', allEatenFoodDotIds);
-        allEatenFoodDotIds = [];
-    }, 1000 / 8);
+        if (allEatenFoodDotIds.length > 0) {
+            io.emit('server consumed food dot ids', allEatenFoodDotIds);
+            allEatenFoodDotIds = [];
+        }
+    }, 1000 / 4);
 });
 
 

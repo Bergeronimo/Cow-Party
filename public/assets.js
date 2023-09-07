@@ -11,14 +11,17 @@ const CowTexture = new_enum(
     "COW_2",
     "COW_3",
 );
+const BackgroundTexture = new_enum(
+    "BACKGROUND_1",
+);
 
 let grassTextures = {};
 let cowTextures = {};
+let backgroundTextures = {};
 
-function load_grass_textures() {
+function loadGrassTextures() {
     return new Promise((resolve) => {
         // load grass textures
-        const grassTextureFileNames = ["grass1.png", "grass2.png", "grass3.png", "grass4.png"];
         const enum_filename_pairs = [
             [GrassTexture.GRASS_1, "grass1.png"],
             [GrassTexture.GRASS_2, "grass2.png"],
@@ -47,10 +50,9 @@ function load_grass_textures() {
     });
 }
 
-function load_cow_textures() {
+function loadCowTextures() {
     return new Promise((resolve) => {
         // load cow textures
-        const cowTextureFileNames = ["cow1.png", "cow2.png", "cow3.png"];
         const enum_filename_pairs = [
             [CowTexture.COW_1, "cow1.png"],
             [CowTexture.COW_2, "cow2.png"],
@@ -79,9 +81,42 @@ function load_cow_textures() {
 
 }
 
+function loadBackgroundTextures() {
+    return new Promise((resolve) => {
+        // load background textures
+        const enum_filename_pairs = [
+            [BackgroundTexture.BACKGROUND_1, "bg.png"],
+        ];
+
+        const bg_start_path = "./assets/";
+        for (const [key, filename] of enum_filename_pairs) {
+            console.log(`setting asset source for ${filename}`)
+            backgroundTextures[key] = new Image();
+            backgroundTextures[key].src = bg_start_path + filename;
+        }
+
+        let imagesLoaded = 0;
+        for (const key in backgroundTextures) {
+            console.log(`adding load listener for ${key}`);
+            backgroundTextures[key].addEventListener('load', function () {
+                imagesLoaded++;
+                if (imagesLoaded === Object.keys(backgroundTextures).length) {
+                    console.log("bg images loaded");
+                    resolve();
+                }
+            });
+        }
+    });
+}
+
+
 function load_images() {
     return new Promise((resolve) => {
-        Promise.all([load_grass_textures(), load_cow_textures()]).then(() => {
+        Promise.all([
+            loadGrassTextures(),
+            loadCowTextures(),
+            loadBackgroundTextures(),
+        ]).then(() => {
             console.log("all images loaded");
             resolve();
         });
@@ -90,4 +125,5 @@ function load_images() {
 
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
+export { BackgroundTexture, backgroundTextures };
 export { load_images };

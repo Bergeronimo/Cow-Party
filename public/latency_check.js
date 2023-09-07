@@ -1,7 +1,7 @@
-let pingTimestamp;
 
 // start latency check
 const startLatencyCheck = (socket) => {
+    let pingTimestamp;
     function sendPing() {
         pingTimestamp = Date.now();
         socket.emit('client ping', pingTimestamp);
@@ -12,7 +12,7 @@ const startLatencyCheck = (socket) => {
         document.getElementById('pingDisplay').textContent = `Ping: ${latency}ms`;
     });
 
-    setInterval(sendPing, 1000);
+    setInterval(sendPing, 1000 / 4);
 }
 
 export { startLatencyCheck };

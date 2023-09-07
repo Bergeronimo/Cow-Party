@@ -15,18 +15,30 @@
     <script type="module" src="constants.js"></script>
     <script type="module" src="state.js"></script>
 
+    <script type="module" src="connection.js"></script>
+
     <script type="module" src="utils.js"></script>
     <script type="module" src="assets.js"></script>
-    <script type="module" src="drawing.js"></script>
     <script type="module" src="controls.js"></script>
     <script type="module" src="latency_check.js"></script>
     <script type="module" src="server_channels.js"></script>
     <script type="module" src="client_channels.js"></script>
     <script type="module" src="app.js"></script>
 
+    <script type="module" src="periodically.js"></script>
+    <script type="module" src="drawing.js"></script>
 
 
-    <p id="pingDisplay">Ping: -- ms</p>
+    <div class="ui" id="debug-div">
+        <p id="pingDisplay">Ping: -- ms</p>
+        <p id="myCowTextureId">myCowTextureId: -- </p>
+    </div>
+
+    <div class="ui" id="player-list">
+        <p>Players:</p>
+        <ul id="player-list-ul">
+        </ul>
+    </div>
 </body>
 
 </html>

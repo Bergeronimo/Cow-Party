@@ -1,15 +1,60 @@
-body {
-    overflow: hidden;
+@font-face {
+    font-family: 'NokiaFC22';
+    src: url('/assets/nokiafc22.ttf') format('truetype');
 }
 
-#pingDisplay {
-    position: absolute;
-    z-index: -1;
+body {
+    overflow: hidden;
+    /* disable scrolling on mobile */
+    margin: 0;
+    padding: 0;
+    background-color: #798347;
+    color: #fff;
+    font-family: 'NokiaFC22', 'Roboto', sans-serif;
+
 }
+
+.ui {
+    z-index: 1;
+    position: absolute;
+
+    /* border */
+    border: 1px solid #fff;
+    border-radius: 5px;
+
+    /* drop shadow */
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+
+    /* semi opaque */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* little bit of margin for sub elements */
+.ui>* {
+    margin: 5px;
+}
+
+#player-list {
+    /* bottom left corner */
+    bottom: 2%;
+    left: 2%;
+    width: 25%;
+    height: 20%;
+}
+
+#debug-div {
+    /* top left corner */
+    top: 2%;
+    left: 2%;
+    width: 50%;
+    height: auto;
+}
+
+
 
 #main-canvas {
     position: absolute;
-    z-index: 0;
+    z-index: -1;
     top: 0;
     left: 0;
     width: 100%;
