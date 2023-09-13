@@ -11,6 +11,17 @@ const CowTexture = new_enum(
     "COW_2",
     "COW_3",
 );
+const MooSound = new_enum(
+    "MOO_1_LOW",
+    "MOO_1_MID",
+    "MOO_1_HIGH",
+    "MOO_2_LOW",
+    "MOO_2_MID",
+    "MOO_2_HIGH",
+    "MOO_3_LOW",
+    "MOO_3_MID",
+    "MOO_3_HIGH",
+);
 
 // const moo 1 / 2 / 3, each has high, med, low
 
@@ -118,9 +129,15 @@ function loadMoos() {
     return new Promise((resolve) => {
         // load moo sounds
         const enum_filename_pairs = [
-            ["MOO_1", "moo1.ogg"],
-            ["MOO_2", "moo2.ogg"],
-            ["MOO_3", "moo3.ogg"],
+            [MooSound.MOO_1_LOW, "moo1_low.ogg"],
+            [MooSound.MOO_1_MID, "moo1_mid.ogg"],
+            [MooSound.MOO_1_HIGH, "moo1_high.ogg"],
+            [MooSound.MOO_2_LOW, "moo2_low.ogg"],
+            [MooSound.MOO_2_MID, "moo2_mid.ogg"],
+            [MooSound.MOO_2_HIGH, "moo2_high.ogg"],
+            [MooSound.MOO_3_LOW, "moo3_low.ogg"],
+            [MooSound.MOO_3_MID, "moo3_mid.ogg"],
+            [MooSound.MOO_3_HIGH, "moo3_high.ogg"],
         ];
 
         const moo_start_path = "./assets/";
@@ -173,5 +190,6 @@ function load_sounds() {
 
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
+export { MooSound, mooSounds };
 export { BackgroundTexture, backgroundTextures };
-export { load_images, load_sounds, mooSounds };
+export { load_images, load_sounds };

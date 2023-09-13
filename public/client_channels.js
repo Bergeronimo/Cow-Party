@@ -1,10 +1,10 @@
 import { state } from './state.js';
 
 const initClientChannels = (socket) => {
-    // transmit updated circle positions
+    // transmit updated player positions
     setInterval(() => {
-        const myCircle = state.circles[socket.id];
-        socket.emit('client player update', myCircle);
+        const myPlayer = state.players[socket.id];
+        socket.emit('client player update', myPlayer);
     }, 1000 / 15);
 
     // transmit consumed food dots

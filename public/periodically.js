@@ -10,27 +10,27 @@ const updateConnectedPlayersUI = () => {
     const playerList = document.getElementById('player-list-ul');
     playerList.innerHTML = '';
 
-    // bail if state.circles is empty
-    if (Object.keys(state.circles).length === 0) {
+    // bail if state.players is empty
+    if (Object.keys(state.players).length === 0) {
         return;
     }
     // make a list of players by [[id, score]...]
     let players = [];
-    for (const id in state.circles) {
+    for (const id in state.players) {
         // skip if id is undefined
         if (id === null) {
             continue;
         }
-        const circle = state.circles[id];
-        // skip if circle is undefined
-        if (circle === null) {
+        const player = state.players[id];
+        // skip if player is undefined
+        if (player === null) {
             continue;
         }
         // id is "(you)" if id is socket.id
         const idd = id === socket.id ? "(you)" : id;
 
-        const player = [idd, circle.radius];
-        players.push(player);
+        const id_player_tuple = [idd, player.radius];
+        players.push(id_player_tuple);
     }
     // sort by score
     players.sort((a, b) => {

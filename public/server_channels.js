@@ -1,13 +1,14 @@
 import { state } from './state.js';
+import { mooSounds } from './assets.js';
 
 const initServerChannels = (socket) => {
-    socket.on('server update circles', (data) => {
-        if (socket.id in state.circles) {
-            data[socket.id] = state.circles[socket.id];
-            state.circles = data;
+    socket.on('server update players', (data) => {
+        if (socket.id in state.players) {
+            data[socket.id] = state.players[socket.id];
+            state.players = data;
         }
         else {
-            state.circles = data;
+            state.players = data;
         }
     });
 
@@ -39,6 +40,66 @@ const initServerChannels = (socket) => {
             let foodDot = foodDotKV["value"];
             state.foodDots[key] = foodDot;
         });
+
+    socket.on('server moo', (data) => {
+        console.log(`server moo: ${data["id"]} ${data["moo"]}`);
+        if (data["id"] === socket.id) {
+            return;
+        }
+        let moo = data["moo"];
+        let mooSound = mooSounds[moo];
+        mooSound.currentTime = 0;
+        mooSound.play();
+    });
+
+    socket.on('server update_round_time_remaining', (round_time_remaining) => {
+        state.round_time_remaining = round_time_remaining;
+
+        const timerElement = document.getElementById('timer');
+        const text = `round time remaining: ${round_time_remaining}`;
+        timerElement.textContent = text;
+    });
+
+    socket.on('server update_time_until_next_round', (time_until_next_round) => {
+        this.round_in_progress = true;
+        state.time_until_next_round = time_until_next_round;
+
+        const timerElement = document.getElementById('timer');
+        const text = `next round in: ${time_until_next_round} second(s)`;
+        timerElement.textContent = text;
+    });
+
+    socket.on('server game_ended', (winner_id) => {
+        state.round_in_progress = false;
+
+        const timerElement = document.getElementById('timer');
+        const text = `BREAK TIME`;
+        timerElement.textContent = text;
+
+        alert(`${winner_id} won`);
+    });
+
+    // server round_start
+    socket.on('server round_start', (winner_id) => {
+        state.round_in_progress = true;
+
+        const timerElement = document.getElementById('timer');
+        const text = `ROUND START`;
+        timerElement.textContent = text;
+    });
+
+    socket.on('server set all players', (allPlayers) => {
+        state.players = allPlayers;
+    });
+
+    socket.on('server set all food dots', (allFoodDots) => {
+        state.foodDots = allFoodDots;
+    });
+
+
+    //     io.emit('server timer', timer);
+
+
 }
 
 export { initServerChannels };

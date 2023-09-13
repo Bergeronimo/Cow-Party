@@ -65,15 +65,15 @@ rightButton.addEventListener('touchend', () => {
 
 function processControls() {
     if (socket.id) {
-        const myCircle = state.circles[socket.id];
-        if (myCircle) {
+        const myPlayer = state.players[socket.id];
+        if (myPlayer) {
             // process input
-            myCircle.vx = 0;
-            myCircle.vy = 0;
-            if (keysPressed.ArrowUp) myCircle.vy = -Constants.SPEED;
-            if (keysPressed.ArrowDown) myCircle.vy = Constants.SPEED;
-            if (keysPressed.ArrowLeft) myCircle.vx = -Constants.SPEED;
-            if (keysPressed.ArrowRight) myCircle.vx = Constants.SPEED;
+            myPlayer.vx = 0;
+            myPlayer.vy = 0;
+            if (keysPressed.ArrowUp) myPlayer.vy = -Constants.SPEED;
+            if (keysPressed.ArrowDown) myPlayer.vy = Constants.SPEED;
+            if (keysPressed.ArrowLeft) myPlayer.vx = -Constants.SPEED;
+            if (keysPressed.ArrowRight) myPlayer.vx = Constants.SPEED;
         }
     }
 }

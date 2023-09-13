@@ -6,6 +6,10 @@ local bounds checking
 midjourney gwaphics
 3 cow variations
 4 grass variations
+9 moo variations, 3 unique per cow
+get all the moos loading
+moo depends on user id, randomly choose between low and high and med moo for given cow id
+
 
 ----------------------------
 TONOTDO
@@ -26,4 +30,5 @@ some more ui
 winning at end of timer
 (cow graphics depend on size for funny)
 
-moo depends on user id, randomly choose between low and high and med moo for given cow id
+
+

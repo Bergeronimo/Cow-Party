@@ -5,6 +5,7 @@ const new_enum = function (...keys) {
         return acc;
     }, {}));
 }
+
 function stringToHash(s) {
     if (s === undefined) return 0;
     if (s === null) return 0;
