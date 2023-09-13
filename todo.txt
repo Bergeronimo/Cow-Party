@@ -20,6 +20,7 @@ players eat eachother
 ----------------------------
 TODO
 ----------------------------
+replace alert win announcement
 change speed of players (become slower as you get fat)
 phonecontrols
 gamepad
