@@ -16,5 +16,34 @@ function stringToHash(s) {
     }
     return Math.abs(hash);
 }
-export { new_enum, stringToHash };
+
+const pickAnIndexFromHashKey = (() => {
+    const cache = {};
+    return (hashKey, choices) => {
+        if (cache.hasOwnProperty(hashKey)) {
+            return cache[hashKey];
+        } else {
+            const hash = stringToHash(hashKey);
+            const index = hash % choices.length;
+            cache[hashKey] = index;
+            return index;
+        }
+    }
+})();
+
+const pickOneFromHashKey = (() => {
+    const cache = {};
+    return (hashKey, choices) => {
+        if (cache.hasOwnProperty(hashKey)) {
+            return cache[hashKey];
+        } else {
+            const hash = stringToHash(hashKey);
+            const index = hash % choices.length;
+            cache[hashKey] = choices[index];
+            return choices[index];
+        }
+    }
+})();
+
+export { new_enum, stringToHash, pickOneFromHashKey, pickAnIndexFromHashKey };
 

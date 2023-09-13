@@ -8,7 +8,27 @@ import { Constants } from './constants.js';
 import { draw } from './drawing.js';
 import { load_images, load_sounds, mooSounds } from './assets.js';
 import { socket } from './connection.js';
-import { getCowTextureIndexFromPlayerSocketId } from './drawing.js';
+import { pickOneFromHashKey } from './utils.js';
+
+
+function playMooSound() {
+    // const mooKey =
+
+    //     function getMooTextureIndexFromPlayerSocketId(cache, playerSocketId) {
+    //         if (playerCowTextureIndexCache.hasOwnProperty(playerSocketId)) {
+    //             return playerCowTextureIndexCache[playerSocketId];
+    //         } else {
+    //             const hash = stringToHash(playerSocketId);
+    //             const playerCowTextureIndex = hash % Object.keys(CowTexture).length;
+    //             playerCowTextureIndexCache[playerSocketId] = playerCowTextureIndex;
+    //             return playerCowTextureIndex;
+    //         }
+    //     }
+
+
+    const randomMooKey = `MOO_${Math.floor(Math.random() * 3) + 1}`;
+    mooSounds[randomMooKey].play();
+}
 
 function step() {
     // step all circles
@@ -55,8 +75,9 @@ function step() {
                     circle.radius += 2;
                     state.eatenFoodIDs.push(foodID);
                     delete state.foodDots[foodID];
-                    const randomMooKey = `MOO_${Math.floor(Math.random() * 3) + 1}`;
-                    mooSounds[randomMooKey].play();
+
+                    playMooSound();
+
                 }
             }
         }
@@ -71,10 +92,6 @@ async function init() {
     await load_sounds();
 
     await new Promise(resolve => setTimeout(resolve, 1000));
-    const myCowTextureIdP = document.getElementById('myCowTextureId');
-    const myCowTextureIndex = getCowTextureIndexFromPlayerSocketId(socket.id);
-    myCowTextureIdP.innerHTML = `My cow texture index: ${myCowTextureIndex}`
-
 }
 
 function loop() {

@@ -4,7 +4,8 @@ import { CowTexture, cowTextures } from './assets.js';
 import { BackgroundTexture, backgroundTextures } from './assets.js';
 import { socket } from './connection.js';
 import { Constants } from './constants.js';
-import { stringToHash } from './utils.js';
+import { pickAnIndexFromHashKey, stringToHash } from './utils.js';
+import { pickOneFromHashKey } from './utils.js';
 
 const canvas = document.getElementById('main-canvas');
 canvas.width = Constants.worldWidth;
@@ -15,42 +16,41 @@ ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 
-const playerCowTextureIndexCache = {};
 const cowTextureSizeBiases = {
     [CowTexture.COW_1]: { sx: 1.25, sy: 1.15, ox: 0.0, oy: -2.5 },  // silver
     [CowTexture.COW_2]: { sx: 1.1, sy: 1.06, ox: 2.0, oy: -2.0 },   // blue
     [CowTexture.COW_3]: { sx: 1.26, sy: 1.19, ox: 2.5, oy: -5 },    // black gold
 };
 
-function getCowTextureIndexFromPlayerSocketId(playerSocketId) {
-    if (playerCowTextureIndexCache.hasOwnProperty(playerSocketId)) {
-        return playerCowTextureIndexCache[playerSocketId];
-    } else {
-        const hash = stringToHash(playerSocketId);
-        const playerCowTextureIndex = hash % Object.keys(CowTexture).length;
-        playerCowTextureIndexCache[playerSocketId] = playerCowTextureIndex;
-        return playerCowTextureIndex;
-    }
+
+function drawRedBoundingBox(x, y, width, height) {
+    ctx.beginPath();
+    ctx.rect(
+        x, // X coordinate of the top-left corner
+        y, // Y coordinate of the top-left corner
+        width,           // Width of the rectangle
+        height            // Height of the rectangle
+    );
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2; // Adjust the line width as needed
+    ctx.stroke();
+    ctx.closePath();
+}
+
+function drawRedCircularHitbox(x, y, radius) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2; // Adjust the line width as needed
+    ctx.stroke();
+    ctx.closePath();
 }
 
 function drawCow(player, id) {
-    // Draw a red bounding box around the circle
-    // ctx.beginPath();
-    // ctx.rect(
-    //     player.x - player.radius, // X coordinate of the top-left corner
-    //     player.y - player.radius, // Y coordinate of the top-left corner
-    //     player.radius * 2,           // Width of the rectangle
-    //     player.radius * 2            // Height of the rectangle
-    // );
-    // ctx.strokeStyle = 'red';
-    // ctx.lineWidth = 2; // Adjust the line width as needed
-    // ctx.stroke();
-    // ctx.closePath();
+    // drawRedBoundingBox(player.x - player.radius, player.y - player.radius, player.radius * 2, player.radius * 2);
+    // drawRedCircularHitbox(player.x, player.y, player.radius);
 
-
-
-
-    const cowTextureIndex = getCowTextureIndexFromPlayerSocketId(id);
+    const cowTextureIndex = pickAnIndexFromHashKey(id, Object.keys(cowTextures));
     const cowTexture = cowTextures[cowTextureIndex];
     const cowTextureSizeBias = cowTextureSizeBiases[cowTextureIndex];
     let start_x = player.x - player.radius * cowTextureSizeBias.sx + cowTextureSizeBias.ox;
@@ -64,14 +64,6 @@ function drawCow(player, id) {
     } catch (e) {
         console.log(`id: ${id}, cowTextureIndex: ${cowTextureIndex}`);
     }
-
-
-    // //    circular hitbox for seeing if the asset is round
-    // ctx.beginPath();
-    // ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-    // ctx.fillStyle = 'red';
-    // ctx.fill();
-    // ctx.closePath();
 
     // Adjust font, position, and color for the ID text
     ctx.font = (id === socket.id) ? 'bold 12px Arial' : '12px Arial';
@@ -135,4 +127,4 @@ const draw = () => {
     }
 }
 
-export { canvas, ctx, drawCow, drawFoodDot, getCowTextureIndexFromPlayerSocketId, draw };
+export { canvas, ctx, drawCow, drawFoodDot, draw };

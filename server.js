@@ -5,7 +5,13 @@ const socketIo = require('socket.io');
 const app = express();
 app.use(express.static('public'));
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+    cors: {
+        origin: "*", // Allow all origins
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
 
 const WORLD_WIDTH = 640;
 const WORLD_HEIGHT = 640;

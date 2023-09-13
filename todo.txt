@@ -25,3 +25,5 @@ bot players
 some more ui
 winning at end of timer
 (cow graphics depend on size for funny)
+
+moo depends on user id, randomly choose between low and high and med moo for given cow id
