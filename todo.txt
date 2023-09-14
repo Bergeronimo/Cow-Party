@@ -9,7 +9,8 @@ midjourney gwaphics
 9 moo variations, 3 unique per cow
 get all the moos loading
 moo depends on user id, randomly choose between low and high and med moo for given cow id
-
+winning at end of timer
+replace alert win announcement
 
 ----------------------------
 TONOTDO
@@ -20,16 +21,43 @@ players eat eachother
 ----------------------------
 TODO
 ----------------------------
-replace alert win announcement
-change speed of players (become slower as you get fat)
 phonecontrols
+    virtual joystick? touch controls?
 gamepad
 
 
 bot players
-some more ui
-winning at end of timer
+some more ui 
 (cow graphics depend on size for funny)
 
+deflate cow when you lose
+victory sound
+game about to start sound, plays right before break ends
+particle system
+    footsteps
+    grass eat particles
+    hurray you win particles
+    loser retard particles
 
+setting your user name
+    update via client
+    server broadcasts id->name pair
+    clients store that
 
+leaderboard
+    winner gets a + 1 win, and stores their largest win score
+    store in json
+
+volume settings
+    music
+    sound effects
+
+spectator mode
+random chance of insane round with higher spawn rates
+play music after joining mid round
+
+-----
+dev bugfix stage
+----- 
+deployment
+deployed bug check stage
