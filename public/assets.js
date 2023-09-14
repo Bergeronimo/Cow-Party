@@ -22,8 +22,12 @@ const MooSound = new_enum(
     "MOO_3_MID",
     "MOO_3_HIGH",
 );
+const Song = new_enum(
+    "SONG_1",
+    "SONG_2",
+    "SONG_3",
+);
 
-// const moo 1 / 2 / 3, each has high, med, low
 
 
 const BackgroundTexture = new_enum(
@@ -34,6 +38,7 @@ let grassTextures = {};
 let cowTextures = {};
 let backgroundTextures = {};
 let mooSounds = {};
+let songs = {};
 
 function loadGrassTextures() {
     return new Promise((resolve) => {
@@ -160,6 +165,33 @@ function loadMoos() {
     });
 }
 
+function loadSongs() {
+    return new Promise((resolve) => {
+        const enum_filename_pairs = [
+            [Song.SONG_1, "music1.ogg"],
+            [Song.SONG_2, "music2.ogg"],
+            [Song.SONG_3, "music3.ogg"],
+        ];
+
+        for (const [key, filename] of enum_filename_pairs) {
+            console.log(`setting asset source for ${filename}`);
+            songs[key] = new Audio("./assets/" + filename);
+        }
+
+        let soundsLoaded = 0;
+        for (const key in songs) {
+            console.log(`adding load listener for ${key}`);
+            songs[key].addEventListener('canplaythrough', function () {
+                soundsLoaded++;
+                if (soundsLoaded === Object.keys(songs).length) {
+                    console.log("songs loaded");
+                    resolve();
+                }
+            });
+        }
+    });
+}
+
 function load_images() {
     return new Promise((resolve) => {
         Promise.all([
@@ -177,7 +209,7 @@ function load_sounds() {
     return new Promise((resolve, reject) => {
         Promise.all([
             loadMoos(),
-            //loadJoinSound(),
+            loadSongs(),
         ]).then(() => {
             console.log("all sounds loaded");
             resolve();
@@ -191,5 +223,6 @@ function load_sounds() {
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
 export { MooSound, mooSounds };
+export { Song, songs };
 export { BackgroundTexture, backgroundTextures };
 export { load_images, load_sounds };

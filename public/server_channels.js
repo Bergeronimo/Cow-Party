@@ -1,5 +1,6 @@
 import { state } from './state.js';
 import { mooSounds } from './assets.js';
+import { Song, songs } from './assets.js';
 
 const initServerChannels = (socket) => {
     socket.on('server update players', (data) => {
@@ -71,6 +72,14 @@ const initServerChannels = (socket) => {
     });
 
     socket.on('server game_ended', (winner_id) => {
+
+
+        // stop all songs
+        Object.values(songs).forEach((song) => {
+            song.pause();
+            song.currentTime = 0;
+        });
+
         state.round_in_progress = false;
 
         const gameStateElement = document.getElementById('game-state');
@@ -113,6 +122,17 @@ const initServerChannels = (socket) => {
         setTimeout(() => {
             gameStateElement.textContent = `GAME IN PROGRESS`;
         }, 2000);
+
+
+        // stop all songs
+        Object.values(songs).forEach((song) => {
+            song.pause();
+            song.currentTime = 0;
+        });
+        // pick a random song from the Song enum
+        const songIndex = Math.floor(Math.random() * Object.keys(songs).length);
+        const song = Object.values(songs)[songIndex];
+        song.play();
     });
 
     socket.on('server set all players', (allPlayers) => {
