@@ -25,9 +25,9 @@ let nextFoodDotId = 0;
 let foodDots = {};
 let allEatenFoodDotIds = [];
 let round_in_progress = false;
-const round_length = 15;
+const round_length = 5;
+const break_length = 5;
 let round_time_remaining = round_length;
-const break_length = 3;
 let time_until_next_round = break_length;
 
 
@@ -125,10 +125,20 @@ server.listen(3000, '0.0.0.0', () => {
 
 function step() {
     if (round_in_progress == true) {
+        console.log("round in progress");
         round_time_remaining -= 1;
         io.emit('server update_round_time_remaining', round_time_remaining);
 
         if (round_time_remaining <= 0) {
+            // if theres no players, then end the game
+            if (Object.keys(players).length == 0) {
+                round_in_progress = false;
+                round_time_remaining = 0;
+                time_until_next_round = break_length;
+                io.emit('server game_ended', null);
+                return;
+            }
+
             // sort players by size
             let sorted_players = Object.values(players).sort((a, b) => (a.radius > b.radius) ? 1 : -1);
             const top_size = sorted_players[sorted_players.length - 1].radius;
@@ -147,7 +157,7 @@ function step() {
         }
     } else {
         // if round not in progress, countdown till next game
-
+        console.log("nest round countdown");
         time_until_next_round -= 1;
         io.emit('server update_time_until_next_round', time_until_next_round);
 

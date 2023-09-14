@@ -61,7 +61,8 @@ const initServerChannels = (socket) => {
     });
 
     socket.on('server update_time_until_next_round', (time_until_next_round) => {
-        this.round_in_progress = true;
+        console.log("server update_time_until_next_round");
+        state.round_in_progress = true;
         state.time_until_next_round = time_until_next_round;
 
         const timerElement = document.getElementById('timer');
@@ -70,22 +71,40 @@ const initServerChannels = (socket) => {
     });
 
     socket.on('server game_ended', (winner_id) => {
+        let winner_id2 = 100;
         state.round_in_progress = false;
 
-        const timerElement = document.getElementById('timer');
+        const gameStateElement = document.getElementById('game-state');
         const text = `BREAK TIME`;
-        timerElement.textContent = text;
+        gameStateElement.textContent = text;
 
-        alert(`${winner_id} won`);
+        // hide the timer element
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent = '';
+
+        const winAnnouncement = document.getElementById('win-announcement');
+        winAnnouncement.display = 'block';
+        winAnnouncement.innerHTML = `somebody won`;
+
+        // make it hide after 5 seconds
+        setTimeout(() => {
+            winAnnouncement.display = 'none';
+            winAnnouncement.innerHTML = '';
+        }, 5000);
     });
 
     // server round_start
     socket.on('server round_start', (winner_id) => {
         state.round_in_progress = true;
 
-        const timerElement = document.getElementById('timer');
+        const gameStateElement = document.getElementById('game-state');
         const text = `ROUND START`;
-        timerElement.textContent = text;
+        gameStateElement.textContent = text;
+
+        // after 2 seconds, hide the round start
+        setTimeout(() => {
+            gameStateElement.textContent = `GAME IN PROGRESS`;
+        }, 2000);
     });
 
     socket.on('server set all players', (allPlayers) => {

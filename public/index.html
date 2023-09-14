@@ -9,8 +9,34 @@
 </head>
 
 <body>
-    <div id="timer" style="text-align:center; font-size: 24px; margin-top: 10px;"></div>
     <canvas id="main-canvas" width="500" height="500" style="border:1px solid #000;"></canvas>
+
+    <div class="ui" id="debug-div">
+        <p id="pingDisplay">Ping: -- ms</p>
+    </div>
+    <div id="game-state-board" style="text-align:center; font-size: 24px; margin-top: 10px;">
+        <p id="game-state">Game State: --</p>
+        <p id="timer"></p>
+    </div>
+
+
+    <div class="ui" id="player-list">
+        <p>Players:</p>
+        <ul id="player-list-ul">
+        </ul>
+    </div>
+
+    <h1 id="win-announcement">YOU WIN</h1>
+
+    <div class="ui" id="movement-buttons">
+        <button id="up-button">Up</button>
+        <button id="down-button">Down</button>
+        <button id="left-button">Left</button>
+        <button id="right-button">Right</button>
+    </div>
+
+
+    <!-- script imports -->
     <script type="module" src="/socket.io/socket.io.js"></script>
 
     <script type="module" src="constants.js"></script>
@@ -28,24 +54,6 @@
 
     <script type="module" src="periodically.js"></script>
     <script type="module" src="drawing.js"></script>
-
-
-    <div class="ui" id="debug-div">
-        <p id="pingDisplay">Ping: -- ms</p>
-    </div>
-
-    <div class="ui" id="player-list">
-        <p>Players:</p>
-        <ul id="player-list-ul">
-        </ul>
-    </div>
-
-    <div class="ui" id="movement-buttons">
-        <button id="up-button">Up</button>
-        <button id="down-button">Down</button>
-        <button id="left-button">Left</button>
-        <button id="right-button">Right</button>
-    </div>
 </body>
 
 </html>

@@ -112,6 +112,10 @@ async function init() {
     await load_sounds();
 
     await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const winAnnouncement = document.getElementById('win-announcement');
+    winAnnouncement.display = 'none';
+    winAnnouncement.innerHTML = '';
 }
 
 function loop() {

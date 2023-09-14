@@ -14,6 +14,22 @@ body {
 
 }
 
+
+#win-announcement {
+    /* centered */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    /* size is 25% the screen width and height */
+    width: 25%;
+    height: 25%;
+
+    /* hidden */
+    /* display: none; */
+}
+
 .ui {
     z-index: 1;
     position: absolute;
@@ -86,4 +102,18 @@ body {
     /* Possible future browsers.*/
     -ms-interpolation-mode: nearest-neighbor;
     /* IE (non standard naming)*/
+}
+
+#game-state-board {
+    position: absolute;
+    z-index: 1;
+
+    /* centered left to right, but at top of screen */
+    top: 2%;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    /* size 25% screen width, 10% screen height */
+    width: 25%;
+    height: 10%;
 }
