@@ -1,6 +1,7 @@
 import { state } from './state.js';
 import { mooSounds } from './assets.js';
 import { Song, songs } from './assets.js';
+import { audioContext, fadeOut } from './assets.js';
 
 const initServerChannels = (socket) => {
     socket.on('server update players', (data) => {
@@ -72,12 +73,8 @@ const initServerChannels = (socket) => {
     });
 
     socket.on('server game_ended', (winner_id) => {
-
-
-        // stop all songs
         Object.values(songs).forEach((song) => {
-            song.pause();
-            song.currentTime = 0;
+            fadeOut(song);
         });
 
         state.round_in_progress = false;
@@ -128,6 +125,7 @@ const initServerChannels = (socket) => {
         Object.values(songs).forEach((song) => {
             song.pause();
             song.currentTime = 0;
+            song.gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Reset gain back to 1
         });
         // pick a random song from the Song enum
         const songIndex = Math.floor(Math.random() * Object.keys(songs).length);

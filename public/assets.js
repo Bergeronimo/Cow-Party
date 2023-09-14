@@ -1,5 +1,6 @@
 import { new_enum } from './utils.js';
 
+// IMAGES
 const GrassTexture = new_enum(
     "GRASS_1",
     "GRASS_2",
@@ -11,6 +12,11 @@ const CowTexture = new_enum(
     "COW_2",
     "COW_3",
 );
+const BackgroundTexture = new_enum(
+    "BACKGROUND_1",
+);
+
+// AUDIO
 const MooSound = new_enum(
     "MOO_1_LOW",
     "MOO_1_MID",
@@ -29,10 +35,8 @@ const Song = new_enum(
 );
 
 
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-const BackgroundTexture = new_enum(
-    "BACKGROUND_1",
-);
 
 let grassTextures = {};
 let cowTextures = {};
@@ -175,7 +179,17 @@ function loadSongs() {
 
         for (const [key, filename] of enum_filename_pairs) {
             console.log(`setting asset source for ${filename}`);
-            songs[key] = new Audio("./assets/" + filename);
+            const song = new Audio("./assets/" + filename);
+
+            const source = audioContext.createMediaElementSource(song);
+            const gainNode = audioContext.createGain();
+
+            source.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            song.gainNode = gainNode;  // Save gainNode for later use
+
+            songs[key] = song;
         }
 
         let soundsLoaded = 0;
@@ -220,9 +234,24 @@ function load_sounds() {
     });
 }
 
+function fadeOut(song) {
+    const fadeDuration = 1;  // Fade duration in seconds
+    const gainNode = song.gainNode;
+
+    gainNode.gain.setValueAtTime(1, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + fadeDuration);
+
+    setTimeout(() => {
+        song.pause();
+        song.currentTime = 0; // Reset song to start position
+        gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Reset gain back to 1
+    }, fadeDuration * 1000);
+}
+
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
 export { MooSound, mooSounds };
 export { Song, songs };
 export { BackgroundTexture, backgroundTextures };
 export { load_images, load_sounds };
+export { fadeOut, audioContext };
