@@ -140,14 +140,23 @@ function step() {
             }
 
             // sort players by size
-            let sorted_players = Object.values(players).sort((a, b) => (a.radius > b.radius) ? 1 : -1);
-            const top_size = sorted_players[sorted_players.length - 1].radius;
-            const top_cows = sorted_players.filter(player => player.radius == top_size);
+            let id_players = []; // [[id, player], [id, player], ...]
+            Object.keys(players).forEach((key) => {
+                id_players.push([key, players[key]]);
+            });
+            let sorted_players = id_players.sort((a, b) => {
+                return a[1].radius - b[1].radius;
+            });
+            const top_size = sorted_players[sorted_players.length - 1][1].radius; // [id, --> player]
+            const top_players = sorted_players.filter((player) => {
+                return player[1].radius == top_size;
+            });
+
             // if more than one cow is the biggest, then add 5 seconds to the timer
-            if (top_cows.length > 1) {
+            if (top_players.length > 1) {
                 round_time_remaining += 5;
             } else {
-                const winner_id = top_cows[0].id;
+                const winner_id = top_players[0][0];
                 console.log(winner_id); //undefined
                 round_in_progress = false;
                 round_time_remaining = 0;
@@ -157,7 +166,7 @@ function step() {
         }
     } else {
         // if round not in progress, countdown till next game
-        console.log("nest round countdown");
+        //console.log("nest round countdown");
         time_until_next_round -= 1;
         io.emit('server update_time_until_next_round', time_until_next_round);
 

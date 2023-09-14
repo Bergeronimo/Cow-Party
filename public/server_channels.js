@@ -71,7 +71,6 @@ const initServerChannels = (socket) => {
     });
 
     socket.on('server game_ended', (winner_id) => {
-        let winner_id2 = 100;
         state.round_in_progress = false;
 
         const gameStateElement = document.getElementById('game-state');
@@ -84,7 +83,16 @@ const initServerChannels = (socket) => {
 
         const winAnnouncement = document.getElementById('win-announcement');
         winAnnouncement.display = 'block';
-        winAnnouncement.innerHTML = `somebody won`;
+        // if winner_id is defined, then display the winner
+        if (winner_id) {
+            if (winner_id === socket.id) {
+                winAnnouncement.innerHTML = `You won the round!`;
+            } else {
+                winAnnouncement.innerHTML = `Player ${winner_id} won the round!`;
+            }
+        } else {
+            winAnnouncement.innerHTML = `Somebody won...`;
+        }
 
         // make it hide after 5 seconds
         setTimeout(() => {

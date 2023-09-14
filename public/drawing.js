@@ -59,6 +59,19 @@ function drawCow(player, id) {
         console.log(`id: ${id}, cowTextureIndex: ${cowTextureIndex}`);
     }
 
+    // if the cow is you, draw a green circle around him
+    if (id === socket.id) {
+        ctx.beginPath();
+        ctx.arc(player.x + cowTextureSizeBias.ox, player.y + cowTextureSizeBias.oy, player.radius, 0, Math.PI * 2);
+        // thinner
+        ctx.lineWidth = 1;
+        // no fill
+        // lime green
+        ctx.strokeStyle = '#00FF00';
+        ctx.stroke();
+        ctx.closePath();
+    }
+
 
     // //    circular hitbox for seeing if the asset is round
     // ctx.beginPath();
@@ -68,11 +81,11 @@ function drawCow(player, id) {
     // ctx.closePath();
 
     // Adjust font, position, and color for the ID text
-    ctx.font = (id === socket.id) ? 'bold 12px NokiaFC22' : '12px NokiaFC22';
-    ctx.fillStyle = 'black';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    ctx.fillText(id, player.x - player.radius, player.y - player.radius);
+    //ctx.font = (id === socket.id) ? 'bold 12px NokiaFC22' : '12px NokiaFC22';
+    // ctx.fillStyle = 'black';
+    // ctx.textAlign = 'left';
+    // ctx.textBaseline = 'top';
+    // ctx.fillText(id, player.x - player.radius, player.y - player.radius);
 }
 
 function drawFoodDot(foodDot, id) {
