@@ -6,6 +6,7 @@ import { socket } from './connection.js';
 import { Constants } from './constants.js';
 import { stringToHash } from './utils.js';
 import { pickAnIndexFromHashKey, pickOneFromHashKey } from './utils.js';
+import { EffectType } from './special_effect.js';
 
 const canvas = document.getElementById('main-canvas');
 canvas.width = Constants.worldWidth;
@@ -22,6 +23,25 @@ const cowTextureSizeBiases = {
     [CowTexture.COW_3]: { sx: 1.26, sy: 1.19, ox: 2.5, oy: -5 },    // black gold
 };
 
+class SpecialEffects {
+    constructor() {
+        this.effects = [];
+    }
+
+    step() {
+        this.effects.forEach(effect => {
+            effect.step();
+        });
+        this.effects = this.effects.filter(effect => effect.counter > 0);
+    }
+
+    add(effect) {
+        if (this.effects.length < 100) {
+            this.effects.push(effect);
+        }
+    }
+}
+const specialEffects = new SpecialEffects();
 
 function drawCow(player, id) {
     // Draw a red bounding box around the player
@@ -123,11 +143,37 @@ function drawFoodDot(foodDot, id) {
 
 }
 
+function drawSpecialEffect(effect) {
+    // EffectType.MINI_GRASS -> grassTextures[0]; 
+    let texture = null;
+    switch (effect.type) {
+        case EffectType.MINI_GRASS:
+            texture = grassTextures[0];
+            break;
+        default:
+            console.log(`drawSpecialEffect: unknown effect type: ${effect.type}`);
+            return;
+    }
+
+    ctx.save();
+    ctx.translate(effect.pos.x, effect.pos.y);
+    ctx.rotate(effect.rot);
+    ctx.globalAlpha = effect.alpha;
+    ctx.drawImage(
+        texture,
+        -effect.size.x / 2,
+        -effect.size.y / 2,
+        effect.size.x,
+        effect.size.y
+    );
+    ctx.restore();
+}
+
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     // draw background
     ctx.drawImage(backgroundTextures[BackgroundTexture.BACKGROUND_1], 0, 0, canvas.width, canvas.height);
-
 
     // draw cows
     for (let id in state.players) {
@@ -144,6 +190,13 @@ const draw = () => {
             drawFoodDot(foodDot, id);
         }
     }
+
+    // draw special effects
+    specialEffects.effects.forEach(effect => {
+        if (effect === undefined) return;
+        drawSpecialEffect(effect);
+    });
 }
 
-export { canvas, ctx, drawCow, drawFoodDot, draw };
+
+export { canvas, ctx, drawCow, drawFoodDot, draw, specialEffects, drawSpecialEffect };

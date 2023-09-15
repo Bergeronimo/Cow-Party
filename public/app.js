@@ -10,7 +10,11 @@ import { load_images, load_sounds, mooSounds } from './assets.js';
 import { socket } from './connection.js';
 import { pickOneFromHashKey } from './utils.js';
 import { MooSound } from './assets.js';
-
+import { EffectType } from './special_effect.js';
+import { Vec2 } from './vec2.js';
+import { specialEffects } from './drawing.js';
+import { StaticEffect, DynamicEffect, SplineEffect, UltraDynamicEffect } from './special_effect.js';
+import { randomNumberBetween } from './utils.js';
 
 const MooSoundCategories = new_enum(
     "MOO_1",
@@ -49,6 +53,78 @@ function playMooSound() {
     sound.currentTime = 0;
     sound.play();
 }
+
+let mousePos = new Vec2(0, 0);
+document.addEventListener('mousemove', function (event) {
+    mousePos.x = event.clientX / window.innerWidth * Constants.worldWidth;
+    mousePos.y = event.clientY / window.innerHeight * Constants.worldHeight;
+});
+
+
+setInterval(() => {
+    // effect types to test
+    // StaticEffect, DynamicEffect, SplineEffect, UltraDynamicEffect
+
+    // static effect
+    // const effect = new StaticEffect(
+    //     EffectType.MINI_GRASS,
+    //     100,
+    //     mousePos.clone(),
+    //     new Vec2(10, 10),
+    //     0,
+    //     1.0,
+    // );
+
+    // dynamic effect
+    const size_vel = randomNumberBetween(-0.1, -0.01);
+    const effect = new DynamicEffect(
+        EffectType.MINI_GRASS,
+        100,
+        mousePos.clone(),
+        new Vec2(10, 10),
+        0,
+        1.0,
+        new Vec2(
+            randomNumberBetween(-1, 1),
+            randomNumberBetween(-1, 1),
+        ),
+        new Vec2(size_vel, size_vel),
+        randomNumberBetween(-0.1, -0.01),
+        randomNumberBetween(-0.01, -0.001),
+    );
+
+    // spline effect
+    // const p1 = mousePos.clone();
+    // // p2 should be a random point within 200 pixels of p1
+    // const p2 = p1.clone().add(new Vec2(
+    //     randomNumberBetween(-200, 200),
+    //     randomNumberBetween(-200, 200),
+    // ));
+    // // p3 should be a random point within 200 pixels of p2
+    // const p3 = p2.clone().add(new Vec2(
+    //     randomNumberBetween(-200, 200),
+    //     randomNumberBetween(-200, 200),
+    // ));
+    // const effect = new SplineEffect(
+    //     EffectType.MINI_GRASS, // type
+    //     100,   // counter
+    //     p1, p2, p3, // points
+    //     new Vec2(20, 20),// size
+    //     0.0, // rot
+    //     1.0,// alpha1
+    //     0.01, // tvel
+    //     new Vec2(-0.01, -0.01), // size vel
+    //     0, // rot vel
+    //     -0.01, // alpha vel
+    //     0.0, // t acc
+    //     new Vec2(0.0, 0.0), //size acc
+    //     0.001, // rot acc
+    //     0.0, // alpha acc
+    // );
+
+    specialEffects.add(effect);
+}, 100);
+
 
 function step() {
     // step all players
@@ -102,7 +178,10 @@ function step() {
             }
         }
     }
+
+    specialEffects.step();
 }
+
 
 async function init() {
     startLatencyCheck(socket);

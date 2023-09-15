@@ -6,6 +6,11 @@ const new_enum = function (...keys) {
     }, {}));
 }
 
+
+function randomNumberBetween(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function stringToHash(s) {
     if (s === undefined) return 0;
     if (s === null) return 0;
@@ -46,5 +51,5 @@ const pickOneFromHashKey = (() => {
     }
 })();
 
-export { new_enum, stringToHash, pickOneFromHashKey, pickAnIndexFromHashKey };
+export { new_enum, stringToHash, pickOneFromHashKey, pickAnIndexFromHashKey, randomNumberBetween };
 
