@@ -5,6 +5,8 @@ import { audioContext, fadeOut } from './assets.js';
 import { countdownSound } from './assets.js';
 
 const MUSIC_ENABLED = true;
+const COUNTDOWN_OFFSET = 0.7;  // Offset in seconds to synchronize countdown.ogg playback with round start
+
 
 const initServerChannels = (socket) => {
     socket.on('server update players', (data) => {
@@ -79,7 +81,7 @@ const initServerChannels = (socket) => {
 
         if (time_until_next_round === roundedDuration) {
             // Calculate the delay required
-            const delay = (roundedDuration - countdownSound.duration) * 1000; // Convert to milliseconds
+            const delay = (roundedDuration - countdownSound.duration + COUNTDOWN_OFFSET) * 1000; // Convert to milliseconds
 
             setTimeout(() => {
                 countdownSound.currentTime = 0;
