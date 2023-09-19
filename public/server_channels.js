@@ -19,6 +19,21 @@ const initServerChannels = (socket) => {
         }
     });
 
+    function playRandomSong() {
+        if (MUSIC_ENABLED) {
+            // stop all songs
+            Object.values(songs).forEach((song) => {
+                song.pause();
+                song.currentTime = 0;
+                song.gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Reset gain back to 1
+            });
+            // pick a random song from the Song enum
+            const songIndex = Math.floor(Math.random() * Object.keys(songs).length);
+            const song = Object.values(songs)[songIndex];
+            song.play();
+        }
+    }
+
     socket.on('server consumed food dot ids', (allEatenFoodDotIds) => {
         allEatenFoodDotIds.forEach((eatenFoodDotId) => {
             if (state.foodDots.hasOwnProperty(eatenFoodDotId)) {
@@ -65,6 +80,13 @@ const initServerChannels = (socket) => {
         const timerElement = document.getElementById('timer');
         const text = `round time remaining: ${round_time_remaining}`;
         timerElement.textContent = text;
+
+        // Check if any song is currently playing
+        const isAnySongPlaying = Object.values(songs).some(song => !song.paused);
+
+        if (!isAnySongPlaying) {
+            playRandomSong();
+        }
     });
 
     socket.on('server update_time_until_next_round', (time_until_next_round) => {
@@ -138,18 +160,7 @@ const initServerChannels = (socket) => {
             gameStateElement.textContent = `GAME IN PROGRESS`;
         }, 2000);
 
-        if (MUSIC_ENABLED) {
-            // stop all songs
-            Object.values(songs).forEach((song) => {
-                song.pause();
-                song.currentTime = 0;
-                song.gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Reset gain back to 1
-            });
-            // pick a random song from the Song enum
-            const songIndex = Math.floor(Math.random() * Object.keys(songs).length);
-            const song = Object.values(songs)[songIndex];
-            song.play();
-        }
+        playRandomSong();
     });
 
     socket.on('server set all players', (allPlayers) => {
