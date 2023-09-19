@@ -21,23 +21,23 @@ players eat eachother
 ----------------------------
 TODO
 ----------------------------
-phonecontrols
-    virtual joystick? touch controls?
-gamepad
+phonecontrols(virtual joystick? touch controls?)
+
+gamepad controls
 
 
 bot players
-some more ui 
-(cow graphics depend on size for funny)
+some more ui(?)
+cow graphics depend on size for funny (?)
 
 deflate cow when you lose
 victory sound
 game about to start sound, plays right before break ends
 particle system
     footsteps
-    grass eat particles
-    hurray you win particles
-    loser retard particles
+    grass eat particles (?)
+    hurray you win particles (?)
+    loser retard particles (?)
 
 setting your user name
     update via client
