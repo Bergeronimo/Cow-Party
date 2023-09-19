@@ -43,6 +43,9 @@ let cowTextures = {};
 let backgroundTextures = {};
 let mooSounds = {};
 let songs = {};
+// Countdown Sound
+let countdownSound = new Audio("./assets/countdown.ogg");
+
 
 function loadGrassTextures() {
     return new Promise((resolve) => {
@@ -255,3 +258,4 @@ export { Song, songs };
 export { BackgroundTexture, backgroundTextures };
 export { load_images, load_sounds };
 export { fadeOut, audioContext };
+export { countdownSound }

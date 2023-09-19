@@ -2,6 +2,7 @@ import { state } from './state.js';
 import { mooSounds } from './assets.js';
 import { Song, songs } from './assets.js';
 import { audioContext, fadeOut } from './assets.js';
+import { countdownSound } from './assets.js';
 
 const MUSIC_ENABLED = true;
 
@@ -72,6 +73,19 @@ const initServerChannels = (socket) => {
         const timerElement = document.getElementById('timer');
         const text = `next round in: ${time_until_next_round} second(s)`;
         timerElement.textContent = text;
+
+        // Get the rounded-up duration of countdown.ogg
+        const roundedDuration = Math.ceil(countdownSound.duration);
+
+        if (time_until_next_round === roundedDuration) {
+            // Calculate the delay required
+            const delay = (roundedDuration - countdownSound.duration) * 1000; // Convert to milliseconds
+
+            setTimeout(() => {
+                countdownSound.currentTime = 0;
+                countdownSound.play();
+            }, delay);
+        }
     });
 
     socket.on('server game_ended', (winner_id) => {
