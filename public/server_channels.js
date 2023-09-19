@@ -82,7 +82,8 @@ const initServerChannels = (socket) => {
         timerElement.textContent = text;
 
         // Check if any song is currently playing
-        const isAnySongPlaying = Object.values(songs).some(song => !song.paused);
+        const isAudioContextActive = audioContext.state !== 'suspended';
+        const isAnySongPlaying = isAudioContextActive && Object.values(songs).some(song => !song.paused);
 
         if (!isAnySongPlaying) {
             playRandomSong();
