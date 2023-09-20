@@ -59,8 +59,15 @@ body {
     margin: 5px;
 }
 
-#debug-div {
+#ping-div {
     /* top left corner */
+    top: 2%;
+    right: 2%;
+    width: auto;
+    height: auto;
+}
+
+#volume-slider-div {
     top: 2%;
     left: 2%;
     width: auto;

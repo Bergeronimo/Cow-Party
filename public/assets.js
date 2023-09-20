@@ -37,15 +37,32 @@ const Song = new_enum(
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-
+// image assets
 let grassTextures = {};
 let cowTextures = {};
 let backgroundTextures = {};
+
+// audio assets
 let mooSounds = {};
 let songs = {};
-// Countdown Sound
 let countdownSound = new Audio("./assets/countdown.ogg");
 
+function setMusicVolume(volume) {
+    // iterate through values in songs, and set volume
+    Object.values(songs).forEach(song => {
+        song.gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+    });
+}
+
+function setSoundEffectsVolume(volume) {
+    // iterate through values in mooSounds, and set volume
+    Object.values(mooSounds).forEach(moo => {
+        moo.volume = volume;
+    }
+    );
+
+    countdownSound.volume = volume;
+}
 
 function loadGrassTextures() {
     return new Promise((resolve) => {
@@ -238,10 +255,13 @@ function load_sounds() {
 }
 
 function fadeOut(song) {
+    const volumeSlider = document.getElementById('music-volume-slider');
+    const volume = volumeSlider.value / 100;
+
     const fadeDuration = 1;  // Fade duration in seconds
     const gainNode = song.gainNode;
 
-    gainNode.gain.setValueAtTime(1, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
     gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + fadeDuration);
 
     setTimeout(() => {
@@ -258,4 +278,5 @@ export { Song, songs };
 export { BackgroundTexture, backgroundTextures };
 export { load_images, load_sounds };
 export { fadeOut, audioContext };
-export { countdownSound }
+export { countdownSound };
+export { setMusicVolume, setSoundEffectsVolume };

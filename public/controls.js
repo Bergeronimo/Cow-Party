@@ -12,6 +12,8 @@ const keysPressed = {
 document.addEventListener('keydown', (event) => {
     if (keysPressed.hasOwnProperty(event.key)) {
         keysPressed[event.key] = true;
+        //Navigation events control elements like slider without preventing default
+        event.preventDefault();
     }
 });
 

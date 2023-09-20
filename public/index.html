@@ -11,8 +11,15 @@
 <body>
     <canvas id="main-canvas" width="500" height="500" style="border:1px solid #000;"></canvas>
 
-    <div class="ui" id="debug-div">
+    <div class="ui" id="ping-div">
         <p id="pingDisplay">Ping: -- ms</p>
+    </div>
+    <div class="ui" id="volume-slider-div">
+        <p id="music-volume-slider-display">music-volume</p>
+        <input id="music-volume-slider" type="range" min="0" max="100" value="100" class="slider">
+
+        <p id="sound-effects-volume-slider-display">sound-effects-volume</p>
+        <input id="sound-effects-volume-slider" type="range" min="0" max="100" value="100" class="slider">
     </div>
     <div id="game-state-board" style="text-align:center; font-size: 24px; margin-top: 10px;">
         <p id="game-state">Game State: --</p>

@@ -22,15 +22,18 @@ const initServerChannels = (socket) => {
     function playRandomSong() {
         if (MUSIC_ENABLED) {
             // stop all songs
+            const volumeSlider = document.getElementById('music-volume-slider');
+            const volume = volumeSlider.value / 100;
             Object.values(songs).forEach((song) => {
                 song.pause();
                 song.currentTime = 0;
-                song.gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Reset gain back to 1
+                song.gainNode.gain.setValueAtTime(volume, audioContext.currentTime); // Reset gain back to 1
             });
             // pick a random song from the Song enum
             const songIndex = Math.floor(Math.random() * Object.keys(songs).length);
             const song = Object.values(songs)[songIndex];
             song.play();
+
         }
     }
 

@@ -15,6 +15,7 @@ import { Vec2 } from './vec2.js';
 import { specialEffects } from './drawing.js';
 import { StaticEffect, DynamicEffect, SplineEffect, UltraDynamicEffect } from './special_effect.js';
 import { randomNumberBetween } from './utils.js';
+import { setMusicVolume, setSoundEffectsVolume } from './assets.js';
 
 const MooSoundCategories = new_enum(
     "MOO_1",
@@ -183,6 +184,8 @@ function step() {
 }
 
 
+
+
 async function init() {
     startLatencyCheck(socket);
     initServerChannels(socket);
@@ -192,9 +195,35 @@ async function init() {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
+    // setup win announcement
     const winAnnouncement = document.getElementById('win-announcement');
     winAnnouncement.display = 'none';
     winAnnouncement.innerHTML = '';
+
+    //     <div id="volume-slider-div">
+    //     <input id="volume-slider" type="range" min="0" max="100" value="100" class="slider">
+    //     <p id="volume-slider-display">Volume: 100%</p>
+    // </div>
+
+    // init music volume slider
+    const volumeSlider = document.getElementById('music-volume-slider');
+    const volumeSliderDisplay = document.getElementById('music-volume-slider-display');
+    setMusicVolume(volumeSlider.value / 100);
+    volumeSliderDisplay.innerHTML = `Music: ${volumeSlider.value}%`;
+    volumeSlider.oninput = function () {
+        volumeSliderDisplay.innerHTML = `Music: ${this.value}%`;
+        setMusicVolume(this.value / 100);
+    };
+
+    // init sound effects volume slider
+    const soundEffectsVolumeSlider = document.getElementById('sound-effects-volume-slider');
+    const soundEffectsVolumeSliderDisplay = document.getElementById('sound-effects-volume-slider-display');
+    setSoundEffectsVolume(soundEffectsVolumeSlider.value / 100);
+    soundEffectsVolumeSliderDisplay.innerHTML = `Sound Effects: ${soundEffectsVolumeSlider.value}%`;
+    soundEffectsVolumeSlider.oninput = function () {
+        soundEffectsVolumeSliderDisplay.innerHTML = `Sound Effects: ${this.value}%`;
+        setSoundEffectsVolume(this.value / 100);
+    };
 }
 
 function loop() {
