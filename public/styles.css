@@ -74,6 +74,13 @@ body {
     height: auto;
 }
 
+#name-input-div {
+    top: 17%;
+    left: 2%;
+    width: auto;
+    height: auto;
+}
+
 
 /* put the movement buttons in the bottom right corner */
 #movement-buttons {

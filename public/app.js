@@ -42,6 +42,8 @@ const MooCategoryToSound = {
 }
 
 
+
+
 function playMooSound() {
     const mooCategory = pickOneFromHashKey(socket.id, MooSoundCategories);
     const thisCategorySounds = MooCategoryToSound[mooCategory];
@@ -200,11 +202,6 @@ async function init() {
     winAnnouncement.display = 'none';
     winAnnouncement.innerHTML = '';
 
-    //     <div id="volume-slider-div">
-    //     <input id="volume-slider" type="range" min="0" max="100" value="100" class="slider">
-    //     <p id="volume-slider-display">Volume: 100%</p>
-    // </div>
-
     // init music volume slider
     const volumeSlider = document.getElementById('music-volume-slider');
     const volumeSliderDisplay = document.getElementById('music-volume-slider-display');
@@ -223,6 +220,14 @@ async function init() {
     soundEffectsVolumeSlider.oninput = function () {
         soundEffectsVolumeSliderDisplay.innerHTML = `Sound Effects: ${this.value}%`;
         setSoundEffectsVolume(this.value / 100);
+    };
+
+    // init set name button
+    const setNameButton = document.getElementById('set-name');
+    setNameButton.onclick = function () {
+        const nameInput = document.getElementById('name-input');
+        const name = nameInput.value;
+        socket.emit('client set name', name);
     };
 }
 

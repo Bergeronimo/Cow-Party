@@ -1,5 +1,6 @@
 import { socket } from "./connection.js";
 import { state } from "./state.js";
+import { playerNameLookup } from "./state.js";
 
 const updateConnectedPlayersUI = () => {
     // if socket is not connected, bail
@@ -26,10 +27,7 @@ const updateConnectedPlayersUI = () => {
         if (player === null) {
             continue;
         }
-        // id is "(you)" if id is socket.id
-        const idd = id === socket.id ? "(you)" : id;
-
-        const id_player_tuple = [idd, player.radius];
+        const id_player_tuple = [id, player.radius];
         players.push(id_player_tuple);
     }
     // sort by score
@@ -48,14 +46,17 @@ const updateConnectedPlayersUI = () => {
         // make a display string
         // id: {radius}
         // truncate the id to like 6 chars
-        const idd = id.substring(0, 6);
-        const str = `${idd}: ${score}`;
-        li.innerText = str;
-        // if the id is you, make it bold and bright green
-        if (id === "(you)") {
+        const player_nickname = playerNameLookup.lookupPlayerName(id);
+        let idd = player_nickname.substring(0, 8);
+        if (id === socket.id) {
             li.style.fontWeight = "bold";
             li.style.color = "lime";
         }
+        const str = `${idd}: ${score}`;
+        li.innerText = str;
+        // if the id is you, make it bold and bright green
+
+
         playerList.appendChild(li);
     }
 

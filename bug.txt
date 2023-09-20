@@ -1,0 +1,24 @@
+bug report
+----------------------------
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node server.js`
+listening on *:3000
+a user connected: 3YPw2VbENVGfr4JNAAAE
+a user connected: TvDa3BOR0XdfhAZGAAAG
+a user connected: 8x1pRCc-TnxE5yaiAAAI
+C:\Users\geron\Desktop\movearoundio JS\movearoundio\server.js:190
+                players[key].x = Math.random() * 500;
+                               ^
+
+TypeError: Cannot set properties of null (setting 'x')
+    at C:\Users\geron\Desktop\movearoundio JS\movearoundio\server.js:190:32
+    at Array.forEach (<anonymous>)
+    at Timeout.step [as _onTimeout] (C:\Users\geron\Desktop\movearoundio JS\movearoundio\server.js:189:34)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)
+
+Node.js v18.17.1
+[nodemon] app crashed - waiting for file changes before starting...
+^C^CTerminate batch job (Y/N)? y

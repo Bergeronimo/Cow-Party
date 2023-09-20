@@ -2,6 +2,10 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 
+// import { playerNameLookup } from './server_util';
+// node version of import
+const { playerNameLookup } = require('./server_util');
+
 const app = express();
 app.use(express.static('public'));
 const server = http.createServer(app);
@@ -69,6 +73,7 @@ io.on('connection', (socket) => {
     // Send the updated players data to all clients
     socket.emit('server update players', players);
     socket.emit('server set all food dots', foodDots);
+    socket.emit('server set all player names', Object.entries(playerNameLookup.player_id_to_name));
 
     socket.on('client player update', (data) => {
         players[socket.id] = data; // Update the player data for this client
@@ -96,6 +101,12 @@ io.on('connection', (socket) => {
     //     socket.emit('client moo', randomMooSound);
     socket.on('client moo', (randomMooSound) => {
         io.emit('server moo', { "id": socket.id, "moo": randomMooSound });
+    });
+
+    // rcv client set name id, name 
+    socket.on('client set name', (name) => {
+        playerNameLookup.set(socket.id, name);
+        io.emit('server set name', { "id": socket.id, "name": name });
     });
 
     // update all players 
@@ -176,6 +187,9 @@ function step() {
 
             // reset all players
             Object.keys(players).forEach((key) => {
+                if (key == undefined) {
+                    return;
+                }
                 players[key].x = Math.random() * 500;
                 players[key].y = Math.random() * 500;
                 players[key].vx = 0;

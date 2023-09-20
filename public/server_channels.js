@@ -3,6 +3,7 @@ import { mooSounds } from './assets.js';
 import { Song, songs } from './assets.js';
 import { audioContext, fadeOut } from './assets.js';
 import { countdownSound } from './assets.js';
+import { playerNameLookup } from './state.js';
 
 const MUSIC_ENABLED = true;
 const COUNTDOWN_OFFSET = 0.7;  // Offset in seconds to synchronize countdown.ogg playback with round start
@@ -49,6 +50,17 @@ const initServerChannels = (socket) => {
         state.foodDots = allFoodDots;
     });
 
+    socket.on('server set name', (data) => {
+        // io.emit('server set name', { "id": socket.id, "name": name });
+        const id = data["id"];
+        const name = data["name"];
+        playerNameLookup.set(id, name);
+    });
+
+    socket.on('server set all player names', (allPlayerNames) => {
+        // rcvs a list of [(id, name), (id2, name2)..]
+        playerNameLookup.setAll(allPlayerNames);
+    });
 
 
     socket.on('server new food dot kv',
@@ -138,7 +150,12 @@ const initServerChannels = (socket) => {
             if (winner_id === socket.id) {
                 winAnnouncement.innerHTML = `You won the round!`;
             } else {
-                winAnnouncement.innerHTML = `Player ${winner_id} won the round!`;
+                const winnerName = playerNameLookup.lookupPlayerName(winner_id);
+                if (winnerName) {
+                    winAnnouncement.innerHTML = `${winnerName} won the round!`;
+                } else {
+                    winAnnouncement.innerHTML = `Player ${winner_id} won the round!`;
+                }
             }
         } else {
             winAnnouncement.innerHTML = `Somebody won...`;
