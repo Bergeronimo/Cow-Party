@@ -13,7 +13,8 @@ winning at end of timer
 replace alert win announcement
 particle system
 volume sliders: music, sfx
-
+play music after joining mid round
+game about to start sound, plays right before break ends
 
 ----------------------------
 TONOTDO
@@ -41,7 +42,7 @@ cow graphics depend on size for funny (?)
 
 deflate cow when you lose
 victory sound
-game about to start sound, plays right before break ends
+
 
 setting your user name
     update via client
@@ -55,7 +56,7 @@ leaderboard
 
 spectator mode
 random chance of insane round with higher spawn rates
-play music after joining mid round
+
 
 -----
 dev bugfix stage
