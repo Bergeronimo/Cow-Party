@@ -1,5 +1,7 @@
 bug report
 ----------------------------
+unnamed
+----------------------------
 [nodemon] to restart at any time, enter `rs`
 [nodemon] watching path(s): *.*
 [nodemon] watching extensions: js,mjs,cjs,json
@@ -22,3 +24,9 @@ TypeError: Cannot set properties of null (setting 'x')
 Node.js v18.17.1
 [nodemon] app crashed - waiting for file changes before starting...
 ^C^CTerminate batch job (Y/N)? y
+
+----------------------------
+Nonworking Footsteps
+----------------------------
+footsteps dont work during break time...
+, or if you join midround. idk why. the step function for your cow doesnt work or something
