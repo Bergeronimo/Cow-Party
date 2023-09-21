@@ -17,6 +17,7 @@ play music after joining mid round
 game about to start sound, plays right before break ends
 setting your user name: update via client, server broadcasts id->name pair, clients store that
 particles: footsteps (with sounds)
+victory sound / defeat sound
 ----------------------------
 TONOTDO
 ----------------------------
@@ -40,7 +41,7 @@ some more ui(?)
 cow graphics depend on size for funny (?)
 
 deflate cow when you lose
-victory sound
+
 
 
 leaderboard
