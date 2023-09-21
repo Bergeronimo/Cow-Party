@@ -4,6 +4,7 @@ import { Song, songs } from './assets.js';
 import { audioContext, fadeOut } from './assets.js';
 import { countdownSound } from './assets.js';
 import { playerNameLookup } from './state.js';
+import { soundEffects, SoundEffect } from './assets.js';
 
 const MUSIC_ENABLED = true;
 const COUNTDOWN_OFFSET = 0.7;  // Offset in seconds to synchronize countdown.ogg playback with round start
@@ -153,8 +154,10 @@ const initServerChannels = (socket) => {
                 const winnerName = playerNameLookup.lookupPlayerName(winner_id);
                 if (winnerName) {
                     winAnnouncement.innerHTML = `${winnerName} won the round!`;
+                    soundEffects[SoundEffect.LOSE].play();
                 } else {
                     winAnnouncement.innerHTML = `Player ${winner_id} won the round!`;
+                    soundEffects[SoundEffect.WIN].play();
                 }
             }
         } else {

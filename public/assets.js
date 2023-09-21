@@ -368,13 +368,6 @@ function playFootstepSound(pitchFactor = 1.0) {
     source.start(0);
 }
 
-function playWinSound() {
-    soundEffects[SoundEffect.WIN].play();
-}
-
-function playLoseSound() {
-    soundEffects[SoundEffect.LOSE].play();
-}
 
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
