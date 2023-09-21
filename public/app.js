@@ -64,69 +64,69 @@ document.addEventListener('mousemove', function (event) {
 });
 
 
-setInterval(() => {
-    // effect types to test
-    // StaticEffect, DynamicEffect, SplineEffect, UltraDynamicEffect
+// setInterval(() => {
+//     // effect types to test
+//     // StaticEffect, DynamicEffect, SplineEffect, UltraDynamicEffect
 
-    // static effect
-    // const effect = new StaticEffect(
-    //     EffectType.MINI_GRASS,
-    //     100,
-    //     mousePos.clone(),
-    //     new Vec2(10, 10),
-    //     0,
-    //     1.0,
-    // );
+//     // static effect
+//     // const effect = new StaticEffect(
+//     //     EffectType.MINI_GRASS,
+//     //     100,
+//     //     mousePos.clone(),
+//     //     new Vec2(10, 10),
+//     //     0,
+//     //     1.0,
+//     // );
 
-    // dynamic effect
-    const size_vel = randomNumberBetween(-0.1, -0.01);
-    const effect = new DynamicEffect(
-        EffectType.MINI_GRASS,
-        100,
-        mousePos.clone(),
-        new Vec2(10, 10),
-        0,
-        1.0,
-        new Vec2(
-            randomNumberBetween(-1, 1),
-            randomNumberBetween(-1, 1),
-        ),
-        new Vec2(size_vel, size_vel),
-        randomNumberBetween(-0.1, -0.01),
-        randomNumberBetween(-0.01, -0.001),
-    );
+//     // dynamic effect
+//     const size_vel = randomNumberBetween(-0.1, -0.01);
+//     const effect = new DynamicEffect(
+//         EffectType.MINI_GRASS,
+//         100,
+//         mousePos.clone(),
+//         new Vec2(10, 10),
+//         0,
+//         1.0,
+//         new Vec2(
+//             randomNumberBetween(-1, 1),
+//             randomNumberBetween(-1, 1),
+//         ),
+//         new Vec2(size_vel, size_vel),
+//         randomNumberBetween(-0.1, -0.01),
+//         randomNumberBetween(-0.01, -0.001),
+//     );
 
-    // spline effect
-    // const p1 = mousePos.clone();
-    // // p2 should be a random point within 200 pixels of p1
-    // const p2 = p1.clone().add(new Vec2(
-    //     randomNumberBetween(-200, 200),
-    //     randomNumberBetween(-200, 200),
-    // ));
-    // // p3 should be a random point within 200 pixels of p2
-    // const p3 = p2.clone().add(new Vec2(
-    //     randomNumberBetween(-200, 200),
-    //     randomNumberBetween(-200, 200),
-    // ));
-    // const effect = new SplineEffect(
-    //     EffectType.MINI_GRASS, // type
-    //     100,   // counter
-    //     p1, p2, p3, // points
-    //     new Vec2(20, 20),// size
-    //     0.0, // rot
-    //     1.0,// alpha1
-    //     0.01, // tvel
-    //     new Vec2(-0.01, -0.01), // size vel
-    //     0, // rot vel
-    //     -0.01, // alpha vel
-    //     0.0, // t acc
-    //     new Vec2(0.0, 0.0), //size acc
-    //     0.001, // rot acc
-    //     0.0, // alpha acc
-    // );
+//     // spline effect
+//     // const p1 = mousePos.clone();
+//     // // p2 should be a random point within 200 pixels of p1
+//     // const p2 = p1.clone().add(new Vec2(
+//     //     randomNumberBetween(-200, 200),
+//     //     randomNumberBetween(-200, 200),
+//     // ));
+//     // // p3 should be a random point within 200 pixels of p2
+//     // const p3 = p2.clone().add(new Vec2(
+//     //     randomNumberBetween(-200, 200),
+//     //     randomNumberBetween(-200, 200),
+//     // ));
+//     // const effect = new SplineEffect(
+//     //     EffectType.MINI_GRASS, // type
+//     //     100,   // counter
+//     //     p1, p2, p3, // points
+//     //     new Vec2(20, 20),// size
+//     //     0.0, // rot
+//     //     1.0,// alpha1
+//     //     0.01, // tvel
+//     //     new Vec2(-0.01, -0.01), // size vel
+//     //     0, // rot vel
+//     //     -0.01, // alpha vel
+//     //     0.0, // t acc
+//     //     new Vec2(0.0, 0.0), //size acc
+//     //     0.001, // rot acc
+//     //     0.0, // alpha acc
+//     // );
 
-    specialEffects.add(effect);
-}, 100);
+//     specialEffects.add(effect);
+// }, 100);
 
 
 function step() {
@@ -206,7 +206,7 @@ function step() {
 
                     const footprint = new StaticEffect(
                         EffectType.FOOTPRINT,
-                        100,
+                        100 + player.radius * 2,
                         footprintPos,
                         new Vec2(2 + player.radius, 2 + player.radius),
                         Math.atan2(player.vy, player.vx),
