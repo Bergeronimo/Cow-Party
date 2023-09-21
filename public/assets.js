@@ -34,6 +34,11 @@ const Song = new_enum(
     "SONG_3",
 );
 
+const SoundEffect = new_enum(
+    "WIN",
+    "LOSE",
+);
+
 let footprintTexture = null;
 let footstepSoundBuffer = null;
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -45,6 +50,7 @@ let backgroundTextures = {};
 
 // audio assets
 let mooSounds = {};
+let soundEffects = {};
 let songs = {};
 let countdownSound = new Audio("./assets/countdown.ogg");
 
@@ -202,6 +208,34 @@ function loadMoos() {
     });
 }
 
+function loadSoundEffects() {
+    return new Promise((resolve) => {
+        // load moo sounds
+        const enum_filename_pairs = [
+            [SoundEffect.WIN, "win.ogg"],
+            [SoundEffect.LOSE, "lose.ogg"],
+        ];
+
+        const sound_effects_start_path = "./assets/";
+        for (const [key, filename] of enum_filename_pairs) {
+            console.log(`setting asset source for ${filename}`);
+            soundEffects[key] = new Audio(sound_effects_start_path + filename);
+        }
+
+        let soundsLoaded = 0;
+        for (const key in mooSounds) {
+            console.log(`adding load listener for ${key}`);
+            soundEffects[key].addEventListener('canplaythrough', function () {
+                soundsLoaded++;
+                if (soundsLoaded === Object.keys(soundEffects).length) {
+                    console.log("soundEffects sounds loaded");
+                    resolve();
+                }
+            });
+        }
+    });
+}
+
 function loadSongs() {
     return new Promise((resolve) => {
         const enum_filename_pairs = [
@@ -278,6 +312,7 @@ function load_sounds() {
             loadMoos(),
             loadSongs(),
             loadFootstepSound(),
+            loadSoundEffects(),
         ]).then(() => {
             console.log("all sounds loaded");
             resolve();
@@ -333,6 +368,14 @@ function playFootstepSound(pitchFactor = 1.0) {
     source.start(0);
 }
 
+function playWinSound() {
+    soundEffects[SoundEffect.WIN].play();
+}
+
+function playLoseSound() {
+    soundEffects[SoundEffect.LOSE].play();
+}
+
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
 export { MooSound, mooSounds };
@@ -344,3 +387,4 @@ export { fadeOut, audioContext };
 export { countdownSound };
 export { setMusicVolume, setSoundEffectsVolume };
 export { playFootstepSound };
+export { SoundEffect, soundEffects };
