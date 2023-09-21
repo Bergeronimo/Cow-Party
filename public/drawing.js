@@ -1,6 +1,7 @@
 import { state } from './state.js';
 import { GrassTexture, footprintTexture, grassTextures } from './assets.js';
 import { CowTexture, cowTextures } from './assets.js';
+import { ParticleTexture, particleTextures } from './assets.js';
 import { BackgroundTexture, backgroundTextures } from './assets.js';
 import { socket } from './connection.js';
 import { Constants } from './constants.js';
@@ -144,7 +145,6 @@ function drawFoodDot(foodDot, id) {
 }
 
 function drawSpecialEffect(effect) {
-    // EffectType.MINI_GRASS -> grassTextures[0]; 
     let texture = null;
     switch (effect.type) {
         case EffectType.MINI_GRASS:
@@ -152,6 +152,15 @@ function drawSpecialEffect(effect) {
             break;
         case EffectType.FOOTPRINT:
             texture = footprintTexture;
+            break;
+        case EffectType.BALLOON:
+            texture = particleTextures[ParticleTexture.BALLOON];
+            break;
+        case EffectType.CONFETTI_BLUE:
+            texture = particleTextures[ParticleTexture.CONFETTI_BLUE];
+            break;
+        case EffectType.CONFETTI_YELLOW:
+            texture = particleTextures[ParticleTexture.CONFETTI_YELLOW];
             break;
         default:
             console.log(`drawSpecialEffect: unknown effect type: ${effect.type}`);

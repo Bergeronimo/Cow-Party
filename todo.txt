@@ -18,6 +18,8 @@ game about to start sound, plays right before break ends
 setting your user name: update via client, server broadcasts id->name pair, clients store that
 particles: footsteps (with sounds)
 victory sound / defeat sound
+particles: win particles
+
 ----------------------------
 TONOTDO
 ----------------------------
@@ -28,7 +30,6 @@ players eat eachother
 TODO
 ----------------------------
 particles for:
-    hurray you win particles (?)
     loser retard particles (?)
 
 phonecontrols(virtual joystick? touch controls?)

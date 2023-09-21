@@ -15,6 +15,11 @@ const CowTexture = new_enum(
 const BackgroundTexture = new_enum(
     "BACKGROUND_1",
 );
+const ParticleTexture = new_enum(
+    "CONFETTI_YELLOW",
+    "CONFETTI_BLUE",
+    "BALLOON",
+);
 
 // AUDIO
 const MooSound = new_enum(
@@ -47,6 +52,7 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let grassTextures = {};
 let cowTextures = {};
 let backgroundTextures = {};
+let particleTextures = {};
 
 // audio assets
 let mooSounds = {};
@@ -101,6 +107,36 @@ function loadGrassTextures() {
         }
     });
 }
+
+function loadParticleTextures() {
+    return new Promise((resolve) => {
+        // load grass textures
+        const enum_filename_pairs = [
+            [ParticleTexture.BALLOON, "balloon.png"],
+            [ParticleTexture.CONFETTI_BLUE, "confetti_blue.png"],
+            [ParticleTexture.CONFETTI_YELLOW, "confetti_yellow.png"]
+        ];
+
+        for (const [key, filename] of enum_filename_pairs) {
+            console.log(`setting asset source for ${filename}`)
+            particleTextures[key] = new Image();
+            particleTextures[key].src = "./assets/" + filename;
+        }
+
+        let imagesLoaded = 0;
+        for (const key in particleTextures) {
+            console.log(`adding load listener for ${key}`);
+            particleTextures[key].addEventListener('load', function () {
+                imagesLoaded++;
+                if (imagesLoaded === Object.keys(particleTextures).length) {
+                    console.log("all particle textures loaded");
+                    resolve();
+                }
+            });
+        }
+    });
+}
+
 
 function loadCowTextures() {
     return new Promise((resolve) => {
@@ -299,6 +335,7 @@ function load_images() {
             loadCowTextures(),
             loadBackgroundTextures(),
             loadFootprint(),
+            loadParticleTextures(),
         ]).then(() => {
             console.log("all images loaded");
             resolve();
@@ -381,3 +418,4 @@ export { countdownSound };
 export { setMusicVolume, setSoundEffectsVolume };
 export { playFootstepSound };
 export { SoundEffect, soundEffects };
+export { ParticleTexture, particleTextures };

@@ -4,6 +4,9 @@ import { new_enum } from "./utils.js";
 const EffectType = new_enum(
     "MINI_GRASS",
     "FOOTPRINT",
+    "BALLOON",
+    "CONFETTI_BLUE",
+    "CONFETTI_YELLOW",
 );
 
 class StaticEffect {

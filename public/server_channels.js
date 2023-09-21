@@ -5,6 +5,12 @@ import { audioContext, fadeOut } from './assets.js';
 import { countdownSound } from './assets.js';
 import { playerNameLookup } from './state.js';
 import { soundEffects, SoundEffect } from './assets.js';
+import { randomNumberBetween } from './utils.js';
+import { Constants } from './constants.js';
+import { Vec2 } from './vec2.js';
+import { specialEffects } from './drawing.js';
+import { StaticEffect, DynamicEffect, SplineEffect, UltraDynamicEffect } from './special_effect.js';
+import { EffectType } from './special_effect.js';
 
 const MUSIC_ENABLED = true;
 const COUNTDOWN_OFFSET = 0.7;  // Offset in seconds to synchronize countdown.ogg playback with round start
@@ -156,6 +162,73 @@ const initServerChannels = (socket) => {
                 const volume = volumeSlider.value / 100;
                 sound.volume = volume * 0.5;
                 sound.play();
+
+                // spawn a bunch of particles
+                // 10 balloon particles
+                // 10 confetti yellow particles
+                // 10 confetti blue particles
+                const p = new Vec2(
+                    Constants.worldWidth / 2,
+                    Constants.worldHeight / 2,
+                );
+                for (let index = 0; index < 20; index++) {
+                    const size_vel = randomNumberBetween(-0.1, -0.01);
+                    const effect = new DynamicEffect(
+                        EffectType.CONFETTI_BLUE,
+                        randomNumberBetween(80, 120),
+                        p.clone(),
+                        new Vec2(16, 16),
+                        0,
+                        1.0,
+                        new Vec2(
+                            randomNumberBetween(-2, 2),
+                            randomNumberBetween(-2, 2),
+                        ),
+                        new Vec2(size_vel, size_vel),
+                        randomNumberBetween(-0.1, -0.01),
+                        randomNumberBetween(-0.01, -0.001),
+                    );
+                    specialEffects.add(effect);
+                }
+                for (let index = 0; index < 20; index++) {
+                    const size_vel = randomNumberBetween(-0.1, -0.01);
+                    const effect = new DynamicEffect(
+                        EffectType.CONFETTI_YELLOW,
+                        randomNumberBetween(80, 120),
+                        p.clone(),
+                        new Vec2(16, 16),
+                        0,
+                        1.0,
+                        new Vec2(
+                            randomNumberBetween(-2, 2),
+                            randomNumberBetween(-2, 2),
+                        ),
+                        new Vec2(size_vel, size_vel),
+                        randomNumberBetween(-0.1, -0.01),
+                        randomNumberBetween(-0.01, -0.001),
+                    );
+                    specialEffects.add(effect);
+                }
+                for (let index = 0; index < 5; index++) {
+                    const effect = new DynamicEffect(
+                        EffectType.BALLOON, // type
+                        randomNumberBetween(300, 400),
+                        p.clone(), // pos
+                        new Vec2(16, 32), // dims
+                        0,
+                        1.0,
+                        new Vec2(
+                            randomNumberBetween(-0.2, 0.2),
+                            randomNumberBetween(-2, -0.5),
+                        ),
+                        new Vec2(0, 0),
+                        0.0,
+                        randomNumberBetween(-0.001, -0.0001),
+                    );
+                    specialEffects.add(effect);
+                }
+
+
             } else {
                 const winnerName = playerNameLookup.lookupPlayerName(winner_id);
                 const sound = soundEffects[SoundEffect.LOSE];
