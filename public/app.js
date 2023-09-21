@@ -6,7 +6,7 @@ import { initClientChannels } from './client_channels.js';
 import { state } from './state.js';
 import { Constants } from './constants.js';
 import { draw } from './drawing.js';
-import { load_images, load_sounds, mooSounds } from './assets.js';
+import { load_images, load_sounds, mooSounds, playFootstepSound } from './assets.js';
 import { socket } from './connection.js';
 import { pickOneFromHashKey } from './utils.js';
 import { MooSound } from './assets.js';
@@ -181,6 +181,50 @@ function step() {
             }
         }
     }
+
+    // cow footsteps
+    // for each cow, check if moving, 
+    // if moving, decrement the moving sound counter for the cow. 
+    // if that hits zero, reset it, and plop a footprint and play a step sound
+    // footprint rotation depends on cow direction
+    Object.values(state.players).forEach(player => {
+        if (player) {
+            if (player.vx != 0 || player.vy != 0) {
+                // moving
+                if (player.footstepCountdown <= 0) {
+                    // reset countdown
+                    player.footstepCountdown = Constants.footstepInterval
+                        + randomNumberBetween(-5, 5)
+                        + player.radius;
+
+                    // plop footprint
+                    // // position should be a little bit random within cow radius
+                    const footprintPos = new Vec2(
+                        player.x + randomNumberBetween(-player.radius / 2, player.radius / 2),
+                        player.y + randomNumberBetween(-player.radius / 2, player.radius / 2),
+                    );
+
+                    const footprint = new StaticEffect(
+                        EffectType.FOOTPRINT,
+                        100,
+                        footprintPos,
+                        new Vec2(2 + player.radius, 2 + player.radius),
+                        Math.atan2(player.vy, player.vx),
+                        1.0,
+                    );
+                    specialEffects.add(footprint);
+
+                    // normal speed is 1.0
+                    // one octave down is 0.5 speed
+                    // should get deeper with cow size
+                    const speed = 1.0 - (player.radius / 100);
+                    playFootstepSound(speed);
+                } else {
+                    player.footstepCountdown--;
+                }
+            }
+        }
+    });
 
     specialEffects.step();
 }

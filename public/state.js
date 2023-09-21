@@ -4,6 +4,7 @@ class State {
         this.eatenFoodIDs = [];
         this.foodDots = {};
 
+        this.footstepCountdown = {};
 
 
         this.round_in_progress = false;

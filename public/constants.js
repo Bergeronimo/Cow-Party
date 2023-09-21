@@ -4,6 +4,7 @@ const foodDotColor = "#00FF00";
 const foodDotRadius = 8;
 const worldWidth = 640;
 const worldHeight = 480;
+const footstepInterval = 6;
 
 class Constants {
     static get SPEED() {
@@ -24,6 +25,10 @@ class Constants {
 
     static get worldHeight() {
         return worldHeight;
+    }
+
+    static get footstepInterval() {
+        return footstepInterval;
     }
 }
 

@@ -1,5 +1,5 @@
 import { state } from './state.js';
-import { GrassTexture, grassTextures } from './assets.js';
+import { GrassTexture, footprintTexture, grassTextures } from './assets.js';
 import { CowTexture, cowTextures } from './assets.js';
 import { BackgroundTexture, backgroundTextures } from './assets.js';
 import { socket } from './connection.js';
@@ -150,6 +150,9 @@ function drawSpecialEffect(effect) {
         case EffectType.MINI_GRASS:
             texture = grassTextures[0];
             break;
+        case EffectType.FOOTPRINT:
+            texture = footprintTexture;
+            break;
         default:
             console.log(`drawSpecialEffect: unknown effect type: ${effect.type}`);
             return;
@@ -175,14 +178,12 @@ const draw = () => {
     // draw background
     ctx.drawImage(backgroundTextures[BackgroundTexture.BACKGROUND_1], 0, 0, canvas.width, canvas.height);
 
-    // draw cows
-    for (let id in state.players) {
-        if (id === null) continue; // skip null values (deleted players
-        const player = state.players[id];
-        if (player) {
-            drawCow(player, id);
-        }
-    }
+    // draw special effects
+    specialEffects.effects.forEach(effect => {
+        if (effect === undefined) return;
+        drawSpecialEffect(effect);
+    });
+
     // draw food dots
     for (let id in state.foodDots) {
         const foodDot = state.foodDots[id];
@@ -191,11 +192,14 @@ const draw = () => {
         }
     }
 
-    // draw special effects
-    specialEffects.effects.forEach(effect => {
-        if (effect === undefined) return;
-        drawSpecialEffect(effect);
-    });
+    // draw cows
+    for (let id in state.players) {
+        if (id === null) continue; // skip null values (deleted players
+        const player = state.players[id];
+        if (player) {
+            drawCow(player, id);
+        }
+    }
 }
 
 

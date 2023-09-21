@@ -16,7 +16,7 @@ volume sliders: music, sfx
 play music after joining mid round
 game about to start sound, plays right before break ends
 setting your user name: update via client, server broadcasts id->name pair, clients store that
-
+particles: footsteps (with sounds)
 ----------------------------
 TONOTDO
 ----------------------------
@@ -27,8 +27,6 @@ players eat eachother
 TODO
 ----------------------------
 particles for:
-    footsteps
-    grass eat particles (?)
     hurray you win particles (?)
     loser retard particles (?)
 

@@ -34,7 +34,8 @@ const Song = new_enum(
     "SONG_3",
 );
 
-
+let footprintTexture = null;
+let footstepSoundBuffer = null;
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 // image assets
@@ -154,6 +155,18 @@ function loadBackgroundTextures() {
     });
 }
 
+function loadFootprint() {
+    return new Promise((resolve) => {
+        footprintTexture = new Image();
+        footprintTexture.src = "./assets/footprint.png";
+
+        footprintTexture.addEventListener('load', function () {
+            console.log("footprint loaded");
+            resolve();
+        });
+    });
+}
+
 function loadMoos() {
     return new Promise((resolve) => {
         // load moo sounds
@@ -226,12 +239,32 @@ function loadSongs() {
     });
 }
 
+function loadFootstepSound() {
+    const url = "./assets/footstep.ogg";
+
+    return new Promise((resolve, reject) => {
+        fetch(url)
+            .then(response => response.arrayBuffer())
+            .then(data => audioContext.decodeAudioData(data))
+            .then(buffer => {
+                footstepSoundBuffer = buffer;
+                console.log("footstep sound loaded");
+                resolve();
+            })
+            .catch(err => {
+                console.error("Error loading footstep sound: ", err);
+                reject(err);
+            });
+    });
+}
+
 function load_images() {
     return new Promise((resolve) => {
         Promise.all([
             loadGrassTextures(),
             loadCowTextures(),
             loadBackgroundTextures(),
+            loadFootprint(),
         ]).then(() => {
             console.log("all images loaded");
             resolve();
@@ -244,6 +277,7 @@ function load_sounds() {
         Promise.all([
             loadMoos(),
             loadSongs(),
+            loadFootstepSound(),
         ]).then(() => {
             console.log("all sounds loaded");
             resolve();
@@ -271,12 +305,42 @@ function fadeOut(song) {
     }, fadeDuration * 1000);
 }
 
+
+function playFootstepSound(pitchFactor = 1.0) {
+    if (!footstepSoundBuffer) {
+        console.error("Footstep sound is not loaded yet.");
+        return;
+    }
+
+    // Get the volume from the slider (value is between 0 and 100)
+    const volumeSlider = document.getElementById("sound-effects-volume-slider");
+    const volume = volumeSlider.value / 100 * 0.1;  // Convert it to a range between 0 and 1
+
+
+    let source = audioContext.createBufferSource();
+    source.buffer = footstepSoundBuffer;
+
+    // Adjust the pitch by modifying the playback rate
+    source.playbackRate.setValueAtTime(pitchFactor, audioContext.currentTime);
+
+    // As before: Create a GainNode, set the volume, and connect everything
+    let gainNode = audioContext.createGain();
+    gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+
+    source.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    source.start(0);
+}
+
 export { GrassTexture, grassTextures };
 export { CowTexture, cowTextures };
 export { MooSound, mooSounds };
+export { footprintTexture };
 export { Song, songs };
 export { BackgroundTexture, backgroundTextures };
 export { load_images, load_sounds };
 export { fadeOut, audioContext };
 export { countdownSound };
 export { setMusicVolume, setSoundEffectsVolume };
+export { playFootstepSound };

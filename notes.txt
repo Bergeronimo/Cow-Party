@@ -1,0 +1,9 @@
+load in cow footprint asset
+
+need a footprint storer
+
+for each cow, check if moving, 
+if moving, decrement the moving sound counter for the cow. 
+if that hits zero, reset it, and plop a footprint and play a step sound
+
+footprint rotation depends on cow direction
