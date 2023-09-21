@@ -162,6 +162,9 @@ function drawSpecialEffect(effect) {
         case EffectType.CONFETTI_YELLOW:
             texture = particleTextures[ParticleTexture.CONFETTI_YELLOW];
             break;
+        case EffectType.NOOSE:
+            texture = particleTextures[ParticleTexture.NOOSE];
+            break;
         default:
             console.log(`drawSpecialEffect: unknown effect type: ${effect.type}`);
             return;

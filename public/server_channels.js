@@ -227,8 +227,6 @@ const initServerChannels = (socket) => {
                     );
                     specialEffects.add(effect);
                 }
-
-
             } else {
                 const winnerName = playerNameLookup.lookupPlayerName(winner_id);
                 const sound = soundEffects[SoundEffect.LOSE];
@@ -241,6 +239,31 @@ const initServerChannels = (socket) => {
                     winAnnouncement.innerHTML = `${winnerName} won the round!`;
                 } else {
                     winAnnouncement.innerHTML = `Player ${winner_id} won the round!`;
+                }
+
+                // spawn nooses
+                for (let index = 0; index < 5; index++) {
+                    // random position at top of screen
+                    const p = new Vec2(
+                        randomNumberBetween(0, Constants.worldWidth),
+                        0,
+                    );
+                    const effect = new DynamicEffect(
+                        EffectType.NOOSE, // type
+                        randomNumberBetween(1000, 1200),
+                        p.clone(), // pos
+                        new Vec2(64, 128), // dims
+                        0,
+                        1.0,
+                        new Vec2(
+                            0.0,
+                            randomNumberBetween(0.5, 1.0),
+                        ),
+                        new Vec2(0, 0),
+                        0.0,
+                        0.0,
+                    );
+                    specialEffects.add(effect);
                 }
             }
         } else {

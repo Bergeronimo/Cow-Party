@@ -19,7 +19,7 @@ setting your user name: update via client, server broadcasts id->name pair, clie
 particles: footsteps (with sounds)
 victory sound / defeat sound
 particles: win particles
-
+loser retard particles (?)
 ----------------------------
 TONOTDO
 ----------------------------
@@ -29,9 +29,6 @@ players eat eachother
 ----------------------------
 TODO
 ----------------------------
-particles for:
-    loser retard particles (?)
-
 phonecontrols(virtual joystick? touch controls?)
 
 gamepad controls

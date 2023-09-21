@@ -7,6 +7,7 @@ const EffectType = new_enum(
     "BALLOON",
     "CONFETTI_BLUE",
     "CONFETTI_YELLOW",
+    "NOOSE",
 );
 
 class StaticEffect {

@@ -19,6 +19,7 @@ const ParticleTexture = new_enum(
     "CONFETTI_YELLOW",
     "CONFETTI_BLUE",
     "BALLOON",
+    "NOOSE",
 );
 
 // AUDIO
@@ -114,7 +115,8 @@ function loadParticleTextures() {
         const enum_filename_pairs = [
             [ParticleTexture.BALLOON, "balloon.png"],
             [ParticleTexture.CONFETTI_BLUE, "confetti_blue.png"],
-            [ParticleTexture.CONFETTI_YELLOW, "confetti_yellow.png"]
+            [ParticleTexture.CONFETTI_YELLOW, "confetti_yellow.png"],
+            [ParticleTexture.NOOSE, "noose.png"]
         ];
 
         for (const [key, filename] of enum_filename_pairs) {
