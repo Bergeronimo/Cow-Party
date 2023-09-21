@@ -223,7 +223,7 @@ function loadSoundEffects() {
         }
 
         let soundsLoaded = 0;
-        for (const key in mooSounds) {
+        for (const key in soundEffects) {
             console.log(`adding load listener for ${key}`);
             soundEffects[key].addEventListener('canplaythrough', function () {
                 soundsLoaded++;

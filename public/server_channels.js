@@ -150,14 +150,24 @@ const initServerChannels = (socket) => {
         if (winner_id) {
             if (winner_id === socket.id) {
                 winAnnouncement.innerHTML = `You won the round!`;
+                const sound = soundEffects[SoundEffect.WIN];
+                sound.currentTime = 0;
+                const volumeSlider = document.getElementById('music-volume-slider');
+                const volume = volumeSlider.value / 100;
+                sound.volume = volume * 0.5;
+                sound.play();
             } else {
                 const winnerName = playerNameLookup.lookupPlayerName(winner_id);
+                const sound = soundEffects[SoundEffect.LOSE];
+                sound.currentTime = 0;
+                const volumeSlider = document.getElementById('music-volume-slider');
+                const volume = volumeSlider.value / 100;
+                sound.volume = volume * 0.5;
+                sound.play();
                 if (winnerName) {
                     winAnnouncement.innerHTML = `${winnerName} won the round!`;
-                    soundEffects[SoundEffect.LOSE].play();
                 } else {
                     winAnnouncement.innerHTML = `Player ${winner_id} won the round!`;
-                    soundEffects[SoundEffect.WIN].play();
                 }
             }
         } else {
