@@ -1,5 +1,5 @@
 
-const SPEED = 1;
+const SPEED = 2.2;
 const foodDotColor = "#00FF00";
 const foodDotRadius = 8;
 const worldWidth = 640;

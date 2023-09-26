@@ -25,34 +25,32 @@ TONOTDO
 ----------------------------
 serverside bounds checking
 players eat eachother
+spectator mode
+deflate cow when you lose
+cow graphics depend on size for funny (?)
 
 ----------------------------
 TODO
 ----------------------------
-phonecontrols(virtual joystick? touch controls?)
+bot players
 
+----------------------------
+TODO BONUS
+----------------------------
+random chance of insane round with higher spawn rates
+phonecontrols(virtual joystick? touch controls?)
 gamepad controls
 
-
-bot players
 some more ui(?)
-cow graphics depend on size for funny (?)
-
-deflate cow when you lose
-
-
 
 leaderboard
     winner gets a + 1 win, and stores their largest win score
     store in json
 
-
-spectator mode
-random chance of insane round with higher spawn rates
-
-
 -----
 dev bugfix stage
+
+cow speed unfair - move faster on faster devices
 
 ----- 
 deployment
