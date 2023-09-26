@@ -64,9 +64,17 @@ document.addEventListener('mousemove', function (event) {
     mousePos.y = event.clientY / window.innerHeight * Constants.worldHeight;
 });
 
-
+let lastTime = Date.now();
 function step() {
-
+    const now = Date.now();
+    const delta = (now - lastTime) / 1000; // time difference in seconds
+    lastTime = now;
+    Object.values(state.players).forEach(player => {
+        if (player) {
+            player.x += player.vx * delta;
+            player.y += player.vy * delta;
+        }
+    });
 
     // bounds check all player
     Object.values(state.players).forEach(player => {
@@ -211,18 +219,6 @@ function loop() {
     draw();
     requestAnimationFrame(loop);
 }
-
-setInterval(() => {
-    // cow movement cant be tied to render speed, so has to happen in another loop
-    // before it was tied to the base step, but that caused players with fast computers to have faster move speed
-    // step all players
-    Object.values(state.players).forEach(player => {
-        if (player) {
-            player.x += player.vx;
-            player.y += player.vy;
-        }
-    });
-}, 1000 / 60);
 
 await init();
 loop();
