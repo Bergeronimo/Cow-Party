@@ -90,6 +90,10 @@ io.on('connection', (socket) => {
     });
 
     socket.on('client consumed food dots', (eatenFoodDotIds) => {
+        if (eatenFoodDotIds == undefined) {
+            return;
+        }
+
         eatenFoodDotIds.forEach((eatenFoodDotId) => {
             if (foodDots.hasOwnProperty(eatenFoodDotId)) {
                 delete foodDots[eatenFoodDotId];
@@ -128,7 +132,7 @@ setInterval(() => {
     let foodDotKV = trySpawnRandomFoodDot();
     io.emit('server new food dot kv', foodDotKV);
 
-}, 1000 / 1);
+}, 1000 / 2);
 
 server.listen(3000, '0.0.0.0', () => {
     console.log('listening on *:3000');
@@ -188,6 +192,9 @@ function step() {
             // reset all players
             Object.keys(players).forEach((key) => {
                 if (key == undefined) {
+                    return;
+                }
+                if (players[key] == undefined) {
                     return;
                 }
                 players[key].x = Math.random() * 500;
