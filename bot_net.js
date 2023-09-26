@@ -3,7 +3,8 @@ const spawn = require('cross-spawn');
 
 const child = spawn('npm', ['run', 'start-bot']);
 
-const NUM_INSTANCES = 5;
+// 40 kills the server, 12 server limit
+const NUM_INSTANCES = 4;
 
 for (let i = 0; i < NUM_INSTANCES; i++) {
     const child = spawn('npm', ['run', 'start-bot']);

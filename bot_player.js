@@ -232,13 +232,22 @@ function step() {
     }
 }
 
+const firstNames = [
+    'Moo', 'Bessie', 'Daisy', 'Bella', 'Butter', 'Cocoa', 'Luna', 'Milky',
+    'Rosie', 'Stella', 'Honey', 'Sunny', 'Star', 'Snow', 'Maple', 'Twilight',
+    'Clove', 'Pebble', 'Cream', 'Velvet'
+];
+function getRandomCowName() {
+    return firstNames[Math.floor(Math.random() * firstNames.length)];
+}
 
 function init() {
     initServerChannels(socket);
     initClientChannels(socket);
 
     // emit name
-    socket.emit('client set name', "bot_player_1");
+    let randomCowName = getRandomCowName();
+    socket.emit('client set name', randomCowName);
 }
 
 init();

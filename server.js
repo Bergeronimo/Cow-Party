@@ -29,8 +29,8 @@ let nextFoodDotId = 0;
 let foodDots = {};
 let allEatenFoodDotIds = [];
 let round_in_progress = false;
-const round_length = 10;
-const break_length = 5;
+const round_length = 30;
+const break_length = 10;
 let round_time_remaining = round_length;
 let time_until_next_round = break_length;
 
@@ -58,6 +58,12 @@ function trySpawnRandomFoodDot() {
 }
 
 io.on('connection', (socket) => {
+    // reject if theres already 12 players
+    if (Object.keys(players).length >= 12) {
+        socket.emit('server reject connection', null);
+        return;
+    }
+
     console.log('a user connected:', socket.id);
 
     // Initialize player for the connected client

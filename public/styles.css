@@ -55,7 +55,7 @@ body {
     bottom: 2%;
     left: 2%;
     width: auto;
-    height: 20%;
+    height: auto;
     margin: 5px;
 }
 
@@ -79,6 +79,24 @@ body {
     left: 2%;
     width: auto;
     height: auto;
+}
+
+
+#server-full {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    font-size: 24px;
+    border-radius: 10px;
+    z-index: 9999;
+    /* Make sure it's above other content */
+    display: none;
+    /* Start off as hidden */
+    text-align: center;
 }
 
 

@@ -301,8 +301,25 @@ const initServerChannels = (socket) => {
         state.foodDots = allFoodDots;
     });
 
+    socket.on('server reject connection', (data) => {
+        const serverFullElement = document.getElementById('server-full');
 
-    //     io.emit('server timer', timer);
+        // Update the content of the div and show it
+        serverFullElement.textContent = 'Server is full! The page will refresh in 1 minute.';
+        serverFullElement.style.display = 'block';
+
+        // Disconnect the socket
+        socket.disconnect();
+
+        // Refresh the page after 1 minute (60000 milliseconds)
+        setTimeout(() => {
+            location.reload();
+        }, 60000);
+    });
+
+
+
+
 
 
 }

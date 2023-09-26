@@ -20,6 +20,8 @@ particles: footsteps (with sounds)
 victory sound / defeat sound
 particles: win particles
 loser retard particles (?)
+bugfix - cow speed unfair - move faster on faster devices
+
 ----------------------------
 TONOTDO
 ----------------------------
@@ -28,11 +30,13 @@ players eat eachother
 spectator mode
 deflate cow when you lose
 cow graphics depend on size for funny (?)
+bot players
 
 ----------------------------
 TODO
 ----------------------------
-bot players
+deployment
+    - idle if no players
 
 ----------------------------
 TODO BONUS
@@ -50,8 +54,6 @@ leaderboard
 -----
 dev bugfix stage
 
-cow speed unfair - move faster on faster devices
 
 ----- 
-deployment
 deployed bug check stage

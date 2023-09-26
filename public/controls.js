@@ -30,38 +30,39 @@ document.addEventListener('keyup', (event) => {
 <button id="left-button">Left</button>
 <button id="right-button">Right</button>
 </div> */
-const upButton = document.getElementById('up-button');
-const downButton = document.getElementById('down-button');
-const leftButton = document.getElementById('left-button');
-const rightButton = document.getElementById('right-button');
 
-// button press for phone
-upButton.addEventListener('touchstart', () => {
-    keysPressed.ArrowUp = true;
-});
-downButton.addEventListener('touchstart', () => {
-    keysPressed.ArrowDown = true;
-});
-leftButton.addEventListener('touchstart', () => {
-    keysPressed.ArrowLeft = true;
-});
-rightButton.addEventListener('touchstart', () => {
-    keysPressed.ArrowRight = true;
-});
+// const upButton = document.getElementById('up-button');
+// const downButton = document.getElementById('down-button');
+// const leftButton = document.getElementById('left-button');
+// const rightButton = document.getElementById('right-button');
+
+// // button press for phone
+// upButton.addEventListener('touchstart', () => {
+//     keysPressed.ArrowUp = true;
+// });
+// downButton.addEventListener('touchstart', () => {
+//     keysPressed.ArrowDown = true;
+// });
+// leftButton.addEventListener('touchstart', () => {
+//     keysPressed.ArrowLeft = true;
+// });
+// rightButton.addEventListener('touchstart', () => {
+//     keysPressed.ArrowRight = true;
+// });
 
 // button release for phone
-upButton.addEventListener('touchend', () => {
-    keysPressed.ArrowUp = false;
-});
-downButton.addEventListener('touchend', () => {
-    keysPressed.ArrowDown = false;
-});
-leftButton.addEventListener('touchend', () => {
-    keysPressed.ArrowLeft = false;
-});
-rightButton.addEventListener('touchend', () => {
-    keysPressed.ArrowRight = false;
-});
+// upButton.addEventListener('touchend', () => {
+//     keysPressed.ArrowUp = false;
+// });
+// downButton.addEventListener('touchend', () => {
+//     keysPressed.ArrowDown = false;
+// });
+// leftButton.addEventListener('touchend', () => {
+//     keysPressed.ArrowLeft = false;
+// });
+// rightButton.addEventListener('touchend', () => {
+//     keysPressed.ArrowRight = false;
+// });
 
 
 
